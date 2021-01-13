@@ -1,9 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
+import Cookies from 'js-cookie';
 import App from './App';
 import store from './store';
 import reportWebVitals from './reportWebVitals';
+import { authUser } from './actions/auth';
+import setAuthorizationToken from './helpers/authorization';
+import './styles/app.scss';
+
+const token = Cookies.get('access_token');
+if (token) {
+  setAuthorizationToken(token);
+  store.dispatch(authUser());
+}
 
 ReactDOM.render(
   <React.StrictMode>

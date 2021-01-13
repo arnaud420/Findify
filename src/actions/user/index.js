@@ -1,26 +1,14 @@
 import axios from 'axios';
-import { setAuthorizationToken } from '../../helpers/function';
 import {
   GET_USER, GET_USER_TRACKS, GET_USER_PLAYLISTS,
 } from './type';
 import config from '../../config';
 
-const { spotify, apiUrl } = config;
-
-// export const setToken = (accessToken, refreshToken) => (dispatch) => {
-//   setAuthorizationToken(`Bearer ${accessToken}`);
-//   dispatch({
-//     type: AUTH_USER,
-//     payload: {
-//       accessToken,
-//       refreshToken,
-//     },
-//   });
-// };
+const { spotify, API_URL } = config;
 
 export const getUser = () => async (dispatch) => {
   try {
-    const { data } = await axios.get(`${apiUrl}/me`);
+    const { data } = await axios.get(`${API_URL}/me`);
     console.log('GET USE RDATA', data);
     dispatch({ type: GET_USER, payload: data.data });
   } catch (error) {
@@ -30,7 +18,7 @@ export const getUser = () => async (dispatch) => {
 
 export const getUserTracks = () => async (dispatch) => {
   try {
-    const { data } = await axios.get(`${spotify.apiUrl}/me/tracks`);
+    const { data } = await axios.get(`${spotify.API_URL}/me/tracks`);
     dispatch({ type: GET_USER_TRACKS, payload: data });
   } catch (error) {
     console.log(error);
@@ -39,7 +27,7 @@ export const getUserTracks = () => async (dispatch) => {
 
 export const getUserPlaylists = () => async (dispatch) => {
   try {
-    const { data } = await axios.get(`${spotify.apiUrl}/me/playlists`);
+    const { data } = await axios.get(`${spotify.API_URL}/me/playlists`);
     dispatch({ type: GET_USER_PLAYLISTS, payload: data });
   } catch (error) {
     console.log(error);

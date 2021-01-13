@@ -1,7 +1,11 @@
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import { Link, useLocation } from 'react-router-dom';
 import config from '../config';
+import Logo from '../logo.svg';
+
+const { API_URL } = config;
 
 const routes = [
   {
@@ -19,10 +23,12 @@ const routes = [
 ];
 
 const Navbar = () => {
-  // const { user } = useSelector((state) => state.auth);
+  const location = useLocation();
+  const { pathname } = location;
+  const { user } = useSelector((state) => state.auth);
 
   // const logout = async () => {
-  //   const { data } = await axios.get(`${config.apiUrl}/logout`);
+  //   const { data } = await axios.get(`${config.API_URL}/logout`);
   //   if (data.success) {
   //     Cookies.remove('refresh_token');
   //     Cookies.remove('access_token');
@@ -48,7 +54,7 @@ const Navbar = () => {
   //       </a>
 
   //       <div className="navbar-dropdown">
-  //         <Link href="/settings">
+  //         <Link to="/settings">
   //           <a className="navbar-item">
   //             Préférences
   //           </a>
@@ -65,44 +71,52 @@ const Navbar = () => {
   //   </div>
   // );
 
-  // const renderNavItems = () => (
-  //   routes.map((route) => (
-  //     <Link key={route.location} href={route.location}>
-  //       <a className={`navbar-item${route.location === pathname ? ' is-active' : ''}`}>
-  //         {route.name}
-  //       </a>
-  //     </Link>
-  //   ))
-  // );
+  const renderNavItems = () => (
+    routes.map((route) => (
+      <Link
+        key={route.location}
+        to={route.location}
+        className={`navbar-item${route.location === pathname ? ' is-active' : ''}`}
+      >
+        {route.name}
+      </Link>
+    ))
+  );
 
   return (
     <nav className="navbar py-2 is-fixed-top" role="navigation" aria-label="main navigation">
       <div className="container">
         <div className="navbar-brand">
-          <a className="navbar-item" href="/">
-            <span className="title">Spotifynd</span>
-          </a>
+          <Link className="navbar-item">
+            <img src={Logo} alt="Bulma: a modern CSS framework based on Flexbox" width="112" height="28" />
+          </Link>
         </div>
 
         <div className="navbar-menu">
-          {/* <div className="navbar-start">
+          <div className="navbar-start">
             {
-              user
-                ? renderNavItems()
-                : null
-            } */}
-        </div>
+              // user
+              //   ? renderNavItems()
+              //   : null
+              renderNavItems()
+            }
+          </div>
 
-        {/* <div className="navbar-end">
-            {
+          <div className="navbar-end">
+            {/* {
               user
                 ? renderUserProfil()
                 : null
-            }
-          </div> */}
-        {/* </div> */}
+            } */}
+            <div className="navbar-item">
+              <a href={`${API_URL}/auth/login`} className="button is-primary navbar-item">
+                Connexion avec spotify
+                </a>
+            </div>
+          </div>
+        </div>
       </div>
-    </nav>
+    </nav >
   );
 };
 
