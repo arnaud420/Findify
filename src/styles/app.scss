@@ -1,0 +1,35 @@
+@charset 'utf-8';
+
+// import a Google Font
+@import url('https://fonts.googleapis.com/css?family=Nunito:400,700');
+
+// import variables
+@import './variables.scss';
+
+@import '~bulma';
+
+@import './components/track.scss';
+@import './components/alert.scss';
+@import './components/track_preloader.scss';
+@import './components/card.scss';
+
+html {
+  body {
+    // import custom class
+    @import './classes.scss';
+  }
+  .footer {
+    background-color: #fafafa;
+    padding: 1rem 0;
+    background: transparent;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 9;
+    pointer-events: none;
+    .generated-btn {
+      pointer-events: all;
+    }
+  }
+}

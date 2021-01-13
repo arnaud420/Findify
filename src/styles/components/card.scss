@@ -1,0 +1,9 @@
+.card {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+
+  .card-footer {
+    margin-top: auto;
+  }
+}

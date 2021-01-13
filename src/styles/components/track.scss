@@ -1,0 +1,12 @@
+.track-card {
+  .card-image {
+    span.icon-centered {
+      display: none;
+    }
+    &:hover {
+      span.icon-centered {
+        display: block;
+      }
+    }
+  }
+}
