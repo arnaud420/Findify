@@ -1,11 +1,14 @@
-import axios from 'axios';
 import { useState } from 'react';
+import axios from 'axios';
+import { useHistory } from 'react-router-dom';
 import Layout from '../components/Layout';
 import TrackCardList from '../components/TrackCardList';
 import TrackSearch from '../components/TrackSearch';
 import config from '../config';
+import ROUTES from '../config/routes';
 
 const CreatePlaylist = () => {
+  const history = useHistory();
   const [tracks, setTracks] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -37,8 +40,11 @@ const CreatePlaylist = () => {
   const generatePlaylist = async () => {
     try {
       setIsLoading(true);
-      const data = await axios.post(`${config.API_URL}/generate`, { tracks });
+      const { data} = await axios.post(`${config.API_URL}/generate`, { tracks });
       setIsLoading(false);
+      console.log('data', data);
+      history.push(ROUTES.GET_PLAYLIST.replace(':id', data.data.playlist.id));
+
     } catch (error) {
       setIsLoading(false);
       console.log('err', error);
