@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { sendSuccessNotif } from '../actions/notif';
-import Navbar from './Navbar';
+import { sendSuccessNotif } from '../../actions/notif';
+import Navbar from '../Navbar';
 
 const Layout = ({ children, section, container }) => {
   const location = useLocation();

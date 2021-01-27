@@ -2,8 +2,8 @@ import { useSelector } from 'react-redux';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { Link, useLocation } from 'react-router-dom';
-import config from '../config';
-import Logo from '../logo.svg';
+import config from '../../config';
+import Logo from '../../logo.svg';
 
 const { API_URL } = config;
 
@@ -13,8 +13,8 @@ const routes = [
     name: 'Accueil',
   },
   {
-    location: '/dashboard',
-    name: 'Tableau de bord',
+    location: '/create-playlist',
+    name: 'Créer ma playlist',
   },
   {
     location: '/playlists',
@@ -25,7 +25,10 @@ const routes = [
 const Navbar = () => {
   const location = useLocation();
   const { pathname } = location;
-  const { user } = useSelector((state) => state.auth);
+  const { user, isAuthenticated } = useSelector((state) => state.auth);
+
+  console.log('user', user);
+  console.log('isAuthenticated', isAuthenticated);
 
   // const logout = async () => {
   //   const { data } = await axios.get(`${config.API_URL}/logout`);
@@ -103,16 +106,17 @@ const Navbar = () => {
           </div>
 
           <div className="navbar-end">
-            {/* {
-              user
-                ? renderUserProfil()
-                : null
-            } */}
-            <div className="navbar-item">
-              <a href={`${API_URL}/auth/login`} className="button is-primary navbar-item">
-                Connexion avec spotify
+            {
+              !isAuthenticated
+                ? (
+                  <div className="navbar-item">
+                    <a href={`${API_URL}/auth/login`} className="button is-primary navbar-item">
+                      Connexion avec spotify
                 </a>
-            </div>
+                  </div>
+                )
+                : null
+            }
           </div>
         </div>
       </div>

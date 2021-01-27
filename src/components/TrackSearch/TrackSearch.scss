@@ -1,0 +1,23 @@
+.track-search {
+  position: relative;
+
+  .track-search-results {
+    position: absolute;
+    top: 3.5rem;
+    left: 0;
+    width: 100%;
+    background-color: white;
+    color: black;
+    text-align: left;
+    z-index: 10;
+    border-radius: 4px;
+    max-height: 25rem;
+    overflow: auto;
+
+    ul {
+      li {
+        border-bottom: 1px solid lightgrey;
+      }
+    }
+  }
+}

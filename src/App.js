@@ -5,17 +5,15 @@ import {
 } from 'react-router-dom';
 import PrivateRoute from './components/PrivateRoute';
 import ROUTES from './config/routes';
-import Dashboard from './pages/Dashboard';
+import CreatePlaylist from './pages/CreatePlaylist';
 import Home from './pages/Home';
-import Login from './pages/Login';
 
 const App = () => (
   <Router>
     <Switch>
       <Route path={ROUTES.HOME} exact component={Home} />
-      <Route path={ROUTES.LOGIN} exact component={Login} />
 
-      <PrivateRoute path={ROUTES.DASHBOARD} exact component={Dashboard} />
+      <PrivateRoute path={ROUTES.CREATE_PLAYLIST} exact component={CreatePlaylist} />
 
     </Switch>
   </Router>

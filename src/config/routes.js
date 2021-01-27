@@ -1,7 +1,8 @@
 const ROUTES = {
   HOME: '/',
-  LOGIN: '/login',
-  DASHBOARD: '/dashboard',
+  CREATE_PLAYLIST: '/create-playlist',
+  GET_PLAYLISTS: '/playlists',
+  GET_PLAYLIST: '/playlists/:id',
 };
 
 export default ROUTES;
