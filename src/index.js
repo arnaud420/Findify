@@ -6,13 +6,11 @@ import App from './App';
 import store from './store';
 import reportWebVitals from './reportWebVitals';
 import { authUser } from './actions/auth';
-import setAuthorizationToken from './helpers/authorization';
 import './styles/app.scss';
 
 const token = Cookies.get('access_token');
 if (token) {
-  setAuthorizationToken(token);
-  store.dispatch(authUser());
+  store.dispatch(authUser(token));
 }
 
 ReactDOM.render(

@@ -1,22 +1,19 @@
-import axios from 'axios';
+import Cookies from 'js-cookie';
 import { AUTH_USER, UNAUTH_USER } from './type';
-import config from '../../config';
 import { sendErrorNotif } from '../notif';
+import setAuthorizationToken from '../../helpers/authorization';
+import { getUser } from '../user';
 
-const { API_URL } = config;
-
-export const authUser = () => async (dispatch) => {
+export const authUser = (token) => async (dispatch) => {
   try {
-    const { data } = await axios.get(`${API_URL}/me`);
-    dispatch({
-      type: AUTH_USER,
-      payload: data.data,
-    });
+    dispatch({ type: AUTH_USER });
+    setAuthorizationToken(token);
+    await dispatch(getUser());
   } catch (error) {
-    dispatch({
-      type: UNAUTH_USER,
-      payload: error.response.data.data || error.message,
-    });
+    Cookies.remove('access_token');
+    Cookies.remove('refresh_token');
+    setAuthorizationToken();
+    dispatch({ type: UNAUTH_USER });
     dispatch(sendErrorNotif(error.response.data.data || error.message));
   }
 };

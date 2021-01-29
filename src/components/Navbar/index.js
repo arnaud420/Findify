@@ -4,21 +4,22 @@ import Cookies from 'js-cookie';
 import { Link, useLocation } from 'react-router-dom';
 import config from '../../config';
 import Logo from '../../logo.svg';
+import ROUTES from '../../config/routes';
 
 const { API_URL } = config;
 
 const routes = [
   {
-    location: '/',
+    location: ROUTES.HOME,
     name: 'Accueil',
   },
   {
-    location: '/create-playlist',
-    name: 'Créer ma playlist',
+    location: ROUTES.GET_PLAYLISTS,
+    name: 'Mes playlists',
   },
   {
-    location: '/playlists',
-    name: 'Mes playlists',
+    location: ROUTES.CREATE_PLAYLIST,
+    name: 'Créer ma playlist',
   },
 ];
 
@@ -28,7 +29,7 @@ const Navbar = () => {
   const { user, isAuthenticated } = useSelector((state) => state.auth);
 
   console.log('user', user);
-  console.log('isAuthenticated', isAuthenticated);
+  console.log('isAuthenticated from navbar', isAuthenticated);
 
   // const logout = async () => {
   //   const { data } = await axios.get(`${config.API_URL}/logout`);
@@ -74,7 +75,7 @@ const Navbar = () => {
   //   </div>
   // );
 
-  const renderNavItems = () => (
+  const renderNavItems = (routes) => (
     routes.map((route) => (
       <Link
         key={route.location}
@@ -90,18 +91,20 @@ const Navbar = () => {
     <nav className="navbar py-2 is-fixed-top" role="navigation" aria-label="main navigation">
       <div className="container">
         <div className="navbar-brand">
-          <Link className="navbar-item">
-            <img src={Logo} alt="Bulma: a modern CSS framework based on Flexbox" width="112" height="28" />
+          <Link
+            className="navbar-item"
+            to={ROUTES.HOME}
+          >
+            <img src={Logo} alt="logo" width="112" height="28" />
           </Link>
         </div>
 
         <div className="navbar-menu">
           <div className="navbar-start">
             {
-              // user
-              //   ? renderNavItems()
-              //   : null
-              renderNavItems()
+              isAuthenticated
+                ? renderNavItems(routes)
+                : renderNavItems([{ ...routes[0] }])
             }
           </div>
 

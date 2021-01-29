@@ -1,6 +1,7 @@
 import { AiOutlineHeart, AiTwotoneHeart } from 'react-icons/ai';
 import { FaStopCircle, FaPlayCircle } from 'react-icons/fa';
 import { confirmAlert } from 'react-confirm-alert';
+import { truncateString } from '../../helpers';
 
 // import Alert from './ConfirmAlert';
 
@@ -43,7 +44,7 @@ const TrackCard = ({
                 : null
             }
             <p className="title is-4">
-              {track.name}
+              {truncateString(track.name, 55)}
             </p>
             <p className="subtitle">{track.album.name}</p>
           </div>

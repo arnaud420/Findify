@@ -9,10 +9,10 @@ const { spotify, API_URL } = config;
 export const getUser = () => async (dispatch) => {
   try {
     const { data } = await axios.get(`${API_URL}/me`);
-    console.log('GET USE RDATA', data);
     dispatch({ type: GET_USER, payload: data.data });
   } catch (error) {
-    // console.log(error);
+    console.log('getUser error', error);
+    throw (error);
   }
 };
 

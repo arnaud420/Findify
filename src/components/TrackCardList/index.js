@@ -8,7 +8,7 @@ const TrackCardList = ({ tracks, onTrackDelete }) => {
   return (
     <div className="columns">
       {
-        tracks.map((track) => <TrackCard onDelete={onTrackDelete} track={track} />)
+        tracks.map((track) => <TrackCard key={`trackcard_${track.id}`} onDelete={onTrackDelete} track={track} />)
       }
     </div>
   );
