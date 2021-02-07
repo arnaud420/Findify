@@ -10,6 +10,7 @@ export const authUser = (token) => async (dispatch) => {
     setAuthorizationToken(token);
     await dispatch(getUser());
   } catch (error) {
+    console.log('auth error', error);
     Cookies.remove('access_token');
     Cookies.remove('refresh_token');
     setAuthorizationToken();

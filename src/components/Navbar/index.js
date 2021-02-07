@@ -5,6 +5,7 @@ import { Link, useLocation } from 'react-router-dom';
 import config from '../../config';
 import Logo from '../../logo.svg';
 import ROUTES from '../../config/routes';
+import './Navbar.scss';
 
 const { API_URL } = config;
 
@@ -100,25 +101,17 @@ const Navbar = () => {
         </div>
 
         <div className="navbar-menu">
-          <div className="navbar-start">
-            {
-              isAuthenticated
-                ? renderNavItems(routes)
-                : renderNavItems([{ ...routes[0] }])
-            }
-          </div>
-
           <div className="navbar-end">
             {
               !isAuthenticated
                 ? (
                   <div className="navbar-item">
-                    <a href={`${API_URL}/auth/login`} className="button is-primary navbar-item">
+                    <a href={`${API_URL}/auth/login`} className="button is-link is-outlined is-rounded navbar-item">
                       Connexion avec spotify
-                </a>
+                    </a>
                   </div>
                 )
-                : null
+                : renderNavItems(routes)
             }
           </div>
         </div>

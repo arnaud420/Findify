@@ -1,10 +1,16 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
 import { AiOutlineClose } from "react-icons/ai";
 
-const Search = ({ onSearchChanged }) => {
+const Search = ({ onSearchChanged, placeholder, isReset = false, size }) => {
   const [search, setSearch] = useState('');
   const [timer, setTimer] = useState(null);
+
+  useEffect(() => {
+    if (isReset) {
+      resetSearch();
+    }
+  }, [isReset])
 
   const onValueChange = ({ target }) => {
     setSearch(target.value);
@@ -22,10 +28,10 @@ const Search = ({ onSearchChanged }) => {
   return (
     <div className="control has-icons-left has-icons-right">
       <input
-        className="input is-medium"
+        className={`input ${size === 'medium' ? 'is-medium' : ''}`}
         type="text"
         value={search}
-        placeholder="Recherchez des artistes ou des titres ..."
+        placeholder={placeholder}
         onChange={onValueChange}
       />
       <span className="icon is-left">

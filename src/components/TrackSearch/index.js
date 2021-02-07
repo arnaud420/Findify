@@ -4,10 +4,12 @@ import Search from '../Search';
 import config from '../../config';
 import './TrackSearch.scss';
 
-const TrackSearch = ({ onTrackClicked }) => {
+const TrackSearch = ({ onTrackClicked, placeholder, size }) => {
   const [tracks, setTracks] = useState(null);
+  const [resetSearch, setResetSearch] = useState(false);
 
   const onSearchChanged = async (value) => {
+    setResetSearch(false);
     if (!value || value === '') {
       setTracks(null);
     } else {
@@ -21,13 +23,12 @@ const TrackSearch = ({ onTrackClicked }) => {
   const onTrackClick = (track) => {
     onTrackClicked(track);
     onSearchChanged('');
+    setResetSearch(true);
   }
-
-  console.log('TrackSearch tracks', tracks);
 
   return (
     <div className="track-search">
-      <Search onSearchChanged={onSearchChanged} />
+      <Search onSearchChanged={onSearchChanged} placeholder={placeholder} isReset={resetSearch} size={size} />
       {
         tracks !== null && tracks.length >= 1
           ? (
