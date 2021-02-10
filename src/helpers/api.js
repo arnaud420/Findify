@@ -10,3 +10,14 @@ export const getPlaylist = async (id) => {
     throw (error);
   }
 };
+
+export const editPlaylist = async (id, body) => {
+  try {
+    const { data } = await axios.patch(`${config.API_URL}/playlists/${id}`, body);
+    console.log('data', data);
+    return data.data;
+  } catch (error) {
+    console.log('error', error);
+    throw (error);
+  }
+};
