@@ -21,6 +21,7 @@ const routes = [
   {
     location: ROUTES.CREATE_PLAYLIST,
     name: 'Créer ma playlist',
+    type: 'button'
   },
 ];
 
@@ -77,15 +78,28 @@ const Navbar = () => {
   // );
 
   const renderNavItems = (routes) => (
-    routes.map((route) => (
-      <Link
-        key={route.location}
-        to={route.location}
-        className={`navbar-item${route.location === pathname ? ' is-active' : ''}`}
-      >
-        {route.name}
-      </Link>
-    ))
+    routes.map((route) => {
+      if (route.type && route.type === 'button') {
+        return <div
+          key={route.location}
+          className="navbar-item">
+          <Link
+            to={route.location}
+            className={`button is-link is-rounded${route.location === pathname ? '' : ' is-outlined'}`}
+          >
+            {route.name}
+          </Link>
+        </div>
+      } else {
+        return <Link
+          key={route.location}
+          to={route.location}
+          className={`navbar-item${route.location === pathname ? ' is-active' : ''}`}
+        >
+          {route.name}
+        </Link>
+      }
+    })
   );
 
   return (

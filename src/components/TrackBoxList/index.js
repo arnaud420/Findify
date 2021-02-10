@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import TrackBox from "../TrackBox";
 
 const isPlayingInitialState = {
@@ -7,7 +8,7 @@ const isPlayingInitialState = {
   id: null,
 };
 
-const TrackBoxList = ({ tracks, onDelete }) => {
+const TrackBoxList = ({ tracks, onDelete, onDragEnd }) => {
   const [isPlaying, setIsPlaying] = useState(isPlayingInitialState);
 
   useEffect(() => {
@@ -56,26 +57,66 @@ const TrackBoxList = ({ tracks, onDelete }) => {
     }
   };
 
-  const onDeleteTrack = (track) => {
-    onPlayTrack(track);
+  const onDeleteTrack = async (track) => {
+    if (isPlaying.status === 'play' && isPlaying.id === track.id) {
+      await setIsPlaying({ ...isPlaying, status: 'stop' });
+      setIsPlaying(isPlayingInitialState);
+    }
     onDelete(track);
   }
+
+  const getItemStyle = (isDragging, draggableStyle) => ({
+    userSelect: 'none',
+    background: isDragging ? '#69e8ab' : '',
+    ...draggableStyle,
+  });
 
   if (!tracks || tracks.length <= 0) {
     return null;
   }
 
   return (
-    tracks.map((track) =>
-      <TrackBox
-        key={`trackbox_${track.id}`}
-        track={track}
-        onDelete={onDeleteTrack}
-        onPlay={onPlayTrack}
-        isPlaying={isPlaying}
-      />
-    )
-  );
+    <DragDropContext onDragEnd={onDragEnd}>
+      <Droppable droppableId="droppable">
+        {(provided, snapshot) => (
+          <div
+            {...provided.droppableProps}
+            ref={provided.innerRef}
+          >
+            {tracks.map((track, index) => (
+              <Draggable
+                key={`trackbox_${track.id}`}
+                draggableId={track.id}
+                index={index}
+              >
+                {(provided, snapshot) => (
+                  <div
+                    ref={provided.innerRef}
+                    {...provided.draggableProps}
+                    {...provided.dragHandleProps}
+                    style={getItemStyle(
+                      snapshot.isDragging,
+                      provided.draggableProps.style
+                    )}
+                  >
+                    <TrackBox
+                      track={track}
+                      onDelete={onDeleteTrack}
+                      onPlay={onPlayTrack}
+                      isPlaying={isPlaying}
+                    />
+                  </div>
+                )}
+              </Draggable>
+            ))}
+          </div>
+        )}
+      </Droppable>
+    </DragDropContext>
+  )
 };
 
 export default TrackBoxList;
+
+
+

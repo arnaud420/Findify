@@ -87,6 +87,15 @@ const Playlist = () => {
     }
   }
 
+  const dragTrack = (track) => {
+    const sourceIdx = parseInt(track.source.index);
+    const destIdx = parseInt(track.destination.index);
+    const newList = [...tracks];
+    newList.splice(sourceIdx, 1);
+    newList.splice(destIdx, 0, tracks[sourceIdx]);
+    setTracks(newList);
+  };
+
   return (
     <Layout>
       <Breadcrumb items={breadcrumbLinks} />
@@ -129,29 +138,36 @@ const Playlist = () => {
         </div>
       </section>
 
-      <div className="columns">
-        <div className="column is-6">
 
-          {
-            tracks
-              ? (
-                <div>
+      {
+        tracks
+          ? (
+            <div>
+              <div className="columns">
+                <div className="column">
                   <div className="box">
-                    <p><span className="icon is-left"><BsMusicNoteList /></span>Nombre de musiques: {tracks.length}</p>
-                    <p><span className="icon is-left"><TiMediaFastForward /></span>Durée de la playlist: {msToTime(duration)}</p>
-                  </div>
+                    <p className="mb-2">
+                      <span><span className="icon mb-3"><BsMusicNoteList /></span>{tracks.length}</span>
+                      <span><span className="icon"><TiMediaFastForward /></span>{msToTime(duration)}</span>
+                    </p>
 
-                  <div className="mb-2">
                     <TrackSearch onTrackClicked={onTrackClicked} placeholder="Ajouter une musique à la playlist" />
                   </div>
-
-                  <TrackBoxList tracks={tracks} onDelete={removeTrack} />
                 </div>
-              )
-              : null
-          }
-        </div>
-      </div>
+                <div className="column">
+                  <div className="mb-2">
+                  </div>
+                </div>
+              </div>
+
+
+
+
+              <TrackBoxList tracks={tracks} onDelete={removeTrack} onDragEnd={dragTrack} />
+            </div>
+          )
+          : null
+      }
     </Layout>
   );
 }

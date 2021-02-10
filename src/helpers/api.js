@@ -11,6 +11,16 @@ export const getPlaylist = async (id) => {
   }
 };
 
+export const getArtistInfo = async (id) => {
+  try {
+    const { data } = await axios.get(`${config.API_URL}/artists/${id}`);
+    return data;
+  } catch (error) {
+    console.log('error', error);
+    throw (error);
+  }
+};
+
 export const editPlaylist = async (id, body) => {
   try {
     const { data } = await axios.patch(`${config.API_URL}/playlists/${id}`, body);
