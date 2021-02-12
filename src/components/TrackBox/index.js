@@ -1,32 +1,29 @@
 import { useEffect, useState } from 'react';
 import { FiTrash2 } from 'react-icons/fi';
 import { FaPlay, FaStop } from "react-icons/fa";
+import { MdPlaylistAdd } from "react-icons/md";
 import './TrackBox.scss';
 import { getArtistInfo } from '../../helpers/api';
+import ArtsitModal from '../ArtistModal';
 
-const TrackBox = ({ track, onPlay, onDelete, isPlaying }) => {
+const TrackBox = ({ track, onPlay, onDelete, onAdd, isPlaying, isArtistClickable, isDeletable, isAddable }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [artist, setArtist] = useState(null);
 
   useEffect(() => {
     if (isOpen) {
+      document.querySelector('html').classList.add('is-clipped');
       console.log('get artist', track.album.artists[0].id, track.album.artists[0].name);
       (async () => {
         try {
           const data = await getArtistInfo(track.album.artists[0].id);
-          console.log('data', data);
-          let currentArtist = {};
-          if (data.artistInfo.artists !== null) {
-            currentArtist = data.artistInfo.artists[0];
-          }
-          setArtist({
-            ...currentArtist,
-            ...data.spotify,
-          });
+          setArtist(data);
         } catch (error) {
           console.log('eeror', error);
         }
       })()
+    } else {
+      document.querySelector('html').classList.remove('is-clipped');
     }
   }, [isOpen])
 
@@ -34,22 +31,7 @@ const TrackBox = ({ track, onPlay, onDelete, isPlaying }) => {
 
   return (
     <>
-      <div class={`modal ${isOpen ? 'is-active' : ''}`}>
-        <div class="modal-background" onClick={() => setIsOpen(false)}></div>
-        <div class="modal-content">
-          {
-            artist
-              ? (
-                <div>
-                  <p>{artist.name}</p>
-                  <p>{artist.strBiographyFR || artist.strBiographyEN || ''}</p>
-                </div>
-              )
-              : null
-          }
-        </div>
-        <button class="modal-close is-large" aria-label="close" onClick={() => setIsOpen(false)} />
-      </div>
+      <ArtsitModal artist={artist} isOpen={isOpen} setIsOpen={setIsOpen} />
 
       <div className={`box track-box mb-0 ${isPlaying && isPlaying.id === track.id ? 'is-playing' : ''}`}>
         <article className="media">
@@ -73,7 +55,11 @@ const TrackBox = ({ track, onPlay, onDelete, isPlaying }) => {
               <div className="columns">
                 <div className="column is-9">
                   <p className="mb-0">
-                    <strong><a onClick={() => setIsOpen(!isOpen)}>{track.album.artists[0].name}</a></strong>
+                    {
+                      isArtistClickable
+                        ? <strong><a onClick={() => setIsOpen(!isOpen)}>{track.album.artists[0].name}</a></strong>
+                        : <strong>{track.album.artists[0].name}</strong>
+                    }
                   </p>
                   <span>{track.name}</span>
                 </div>
@@ -89,12 +75,30 @@ const TrackBox = ({ track, onPlay, onDelete, isPlaying }) => {
                           : <FaPlay />
                       }
                     </span>
-                    <span
-                      className="icon has-text-primary is-size-4 mr-3 is-clickable"
-                      onClick={() => onDelete(track)}
-                    >
-                      <FiTrash2 />
-                    </span>
+                    {
+                      isDeletable
+                        ? (
+                          <span
+                            className="icon has-text-primary is-size-4 mr-3 is-clickable"
+                            onClick={() => onDelete(track)}
+                          >
+                            <FiTrash2 />
+                          </span>
+                        )
+                        : null
+                    }
+                    {
+                      isAddable
+                        ? (
+                          <span
+                            className="icon has-text-primary is-size-4 mr-3 is-clickable"
+                            onClick={() => onAdd(track)}
+                          >
+                            <MdPlaylistAdd />
+                          </span>
+                        )
+                        : null
+                    }
                   </div>
                 </div>
               </div>

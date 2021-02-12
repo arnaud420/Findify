@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { BsMusicNoteList } from 'react-icons/bs';
 import { TiMediaFastForward } from 'react-icons/ti';
 import Layout from '../components/Layout';
-import Search from '../components/Search';
 import TrackCard from '../components/TrackCard';
 import TrackSearch from '../components/TrackSearch';
 import ROUTES from '../config/routes';
@@ -138,7 +137,6 @@ const Playlist = () => {
         </div>
       </section>
 
-
       {
         tracks
           ? (
@@ -160,10 +158,7 @@ const Playlist = () => {
                 </div>
               </div>
 
-
-
-
-              <TrackBoxList tracks={tracks} onDelete={removeTrack} onDragEnd={dragTrack} />
+              <TrackBoxList tracks={tracks} onDelete={removeTrack} onDragEnd={dragTrack} isDeletable />
             </div>
           )
           : null

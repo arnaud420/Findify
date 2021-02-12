@@ -1,8 +1,8 @@
 import { GiLunarModule } from 'react-icons/gi';
 
-export const truncateString = (string, nb) => {
+export const truncateString = (string, nb, truncatedTxt) => {
   if (string.length > nb) {
-    return `${string.substr(0, nb)} ...`;
+    return string.substr(0, nb) + (truncatedTxt ? ' ...' : '');
   }
   return string;
 };

@@ -8,7 +8,10 @@ const isPlayingInitialState = {
   id: null,
 };
 
-const TrackBoxList = ({ tracks, onDelete, onDragEnd }) => {
+const TrackBoxList = ({
+  tracks, onAddTrack, onDelete, onDragEnd, isDragDisabled = false,
+  isArtistClickable = true, isDeletable, isAddable,
+}) => {
   const [isPlaying, setIsPlaying] = useState(isPlayingInitialState);
 
   useEffect(() => {
@@ -85,6 +88,7 @@ const TrackBoxList = ({ tracks, onDelete, onDragEnd }) => {
           >
             {tracks.map((track, index) => (
               <Draggable
+                isDragDisabled={isDragDisabled}
                 key={`trackbox_${track.id}`}
                 draggableId={track.id}
                 index={index}
@@ -102,8 +106,12 @@ const TrackBoxList = ({ tracks, onDelete, onDragEnd }) => {
                     <TrackBox
                       track={track}
                       onDelete={onDeleteTrack}
+                      onAdd={onAddTrack}
                       onPlay={onPlayTrack}
                       isPlaying={isPlaying}
+                      isArtistClickable={isArtistClickable}
+                      isDeletable={isDeletable}
+                      isAddable={isAddable}
                     />
                   </div>
                 )}
