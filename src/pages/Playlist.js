@@ -10,6 +10,7 @@ import { msToTime } from '../helpers';
 import { getPlaylist, editPlaylist } from '../helpers/api';
 import Breadcrumb from '../components/Breadcrumb';
 import TrackBoxList from '../components/TrackBoxList';
+import ArtsitModal from '../components/ArtistModal';
 
 const Playlist = () => {
   const { id } = useParams();
@@ -80,7 +81,7 @@ const Playlist = () => {
 
   const editCurrentPlaylist = async (body) => {
     try {
-      const data = await editPlaylist(id, body);
+      await editPlaylist(id, body);
     } catch (error) {
       console.log('error', error);
     }
@@ -98,6 +99,8 @@ const Playlist = () => {
   return (
     <Layout>
       <Breadcrumb items={breadcrumbLinks} />
+
+      <ArtsitModal />
 
       <section className="hero">
         <div className="hero-body">
@@ -140,9 +143,9 @@ const Playlist = () => {
       {
         tracks
           ? (
-            <div>
+            <>
               <div className="columns">
-                <div className="column">
+                <div className="column is-6">
                   <div className="box">
                     <p className="mb-2">
                       <span><span className="icon mb-3"><BsMusicNoteList /></span>{tracks.length}</span>
@@ -152,14 +155,10 @@ const Playlist = () => {
                     <TrackSearch onTrackClicked={onTrackClicked} placeholder="Ajouter une musique à la playlist" />
                   </div>
                 </div>
-                <div className="column">
-                  <div className="mb-2">
-                  </div>
-                </div>
               </div>
 
               <TrackBoxList tracks={tracks} onDelete={removeTrack} onDragEnd={dragTrack} isDeletable />
-            </div>
+            </>
           )
           : null
       }
