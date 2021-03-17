@@ -5,7 +5,8 @@ import { msToTime } from '../../helpers';
 import IconText from '../IconText';
 import TrackSearch from '../TrackSearch';
 
-const PlaylistOptions = ({ playlist, duration, isLoading, onSearchTrack, onSavePlaylist, isEditable }) => {
+const PlaylistOptions = ({ playlist, duration, isLoading, onSearchTrack, onSavePlaylist, isEditable, onSetPlaylistType, playlistType }) => {
+
   return (
     <section className="playlist-options mb-4">
       <div className="columns">
@@ -49,13 +50,27 @@ const PlaylistOptions = ({ playlist, duration, isLoading, onSearchTrack, onSaveP
             isEditable
               ? <div className="control">
                 <label className="radio">
-                  <input className="mr-1" type="radio" name="playlist-type" checked />
-            Public
-        </label>
+                  <input
+                    className="mr-1"
+                    type="radio"
+                    name="playlist-type"
+                    value="public"
+                    checked={playlistType === 'public' ? true : false}
+                    onChange={onSetPlaylistType}
+                  />
+                    Public
+                  </label>
                 <label className="radio">
-                  <input className="mr-1" type="radio" name="playlist-type" />
-            Privée
-        </label>
+                  <input
+                    className="mr-1"
+                    type="radio"
+                    name="playlist-type"
+                    value="private"
+                    checked={playlistType === 'private' ? true : false}
+                    onChange={onSetPlaylistType}
+                  />
+                    Privée
+                  </label>
               </div>
               : null
           }

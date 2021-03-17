@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Layout from '../components/Layout';
-import TrackCard from '../components/TrackCard';
 import { breadcrumb } from '../config/routes';
 import { getPlaylist, editPlaylist, savePlaylistToSpotify } from '../helpers/api';
 import Breadcrumb from '../components/Breadcrumb';
@@ -9,12 +8,13 @@ import TrackBoxList from '../components/TrackBoxList';
 import ArtsitModal from '../components/ArtistModal';
 import PlaylistOptions from '../components/PlaylistOptions';
 import Loader from '../components/Loader';
+import TrackCardList from '../components/TrackCardList';
 
 const Playlist = () => {
   const { id } = useParams();
   const [generatedTracks, setGeneratedTracks] = useState(null);
   const [playlist, setPlaylist] = useState(null);
-  const [isPublic, setIsPublic] = useState(false);
+  const [playlistType, setPlaylistType] = useState('public');
   const [duration, setDuration] = useState(0);
   const [name, setName] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -108,19 +108,20 @@ const Playlist = () => {
 
   const savePlaylist = async () => {
     try {
-      console.log('saveplaylist');
       setIsSendingToSpotify(true);
-      await editCurrentPlaylist({ tracks: playlist.tracks });
-      await savePlaylistToSpotify(id);
+      await editCurrentPlaylist({
+        tracks: playlist.tracks,
+        public: playlistType === 'public' ? true : false,
+      });
+      const newPlaylist = await savePlaylistToSpotify(id);
       setIsSendingToSpotify(false);
       setIsEditable(false);
+      setPlaylist(newPlaylist.data.data);
     } catch (error) {
       setIsSendingToSpotify(false);
       console.log('err', error);
     }
   }
-
-  console.log('isEditable', isEditable);
 
   if (isLoading) {
     return (
@@ -134,6 +135,9 @@ const Playlist = () => {
     )
   }
 
+  const onSetPlaylistType = (e) => {
+    setPlaylistType(e.target.value);
+  }
 
   return (
     <Layout>
@@ -166,13 +170,7 @@ const Playlist = () => {
 
               {
                 generatedTracks
-                  ? (
-                    <div className="columns">
-                      {generatedTracks.map((track) =>
-                        <TrackCard key={`trackcard_${track.id}`} track={track} isInversed />
-                      )}
-                    </div>
-                  )
+                  ? <TrackCardList tracks={generatedTracks} isInversed />
                   : null
               }
             </div>
@@ -191,6 +189,8 @@ const Playlist = () => {
                 onSearchTrack={addTrack}
                 isLoading={isSendingToSpotify}
                 isEditable={isEditable}
+                playlistType={playlistType}
+                onSetPlaylistType={onSetPlaylistType}
               />
 
               <TrackBoxList 

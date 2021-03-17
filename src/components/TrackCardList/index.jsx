@@ -1,6 +1,6 @@
-import TrackCard from "../TrackCard";
+import ItemCard from "../ItemCard";
 
-const TrackCardList = ({ tracks, onTrackDelete }) => {
+const TrackCardList = ({ tracks, onTrackDelete, isInversed }) => {
   if (!tracks || tracks.length <= 0) {
     return null;
   }
@@ -8,7 +8,17 @@ const TrackCardList = ({ tracks, onTrackDelete }) => {
   return (
     <div className="columns">
       {
-        tracks.map((track) => <TrackCard key={`trackcard_${track.id}`} onDelete={onTrackDelete} track={track} />)
+        tracks.map((track) => <ItemCard
+          key={`trackcard_${track.id}`}
+          onDelete={onTrackDelete}
+          item={{
+            ...track,
+            image: track.album.images[1].url,
+            title: track.name,
+            subtitle: track.album.name,
+          }}
+          isInversed={isInversed}
+        />)
       }
     </div>
   );

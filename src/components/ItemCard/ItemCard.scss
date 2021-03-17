@@ -1,0 +1,20 @@
+@import '../../assets/styles/variables.scss';
+
+.card.track-card {
+  box-shadow: none;
+  background-color: transparent;
+
+  .card-image {
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+  }
+}
+
+a.is-link-container {
+  .card-content {
+    .content {
+      p.title {
+        color: $link!important;
+      }
+    }
+  }
+}

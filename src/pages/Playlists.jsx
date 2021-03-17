@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import Layout from '../components/Layout';
-import ROUTES from '../config/routes';
+import PlaylistCardList from '../components/PlaylistCardList';
 import { getPlaylists } from '../helpers/api';
 
 const Playlists = () => {
@@ -23,49 +22,33 @@ const Playlists = () => {
   }, []);
 
   return (
-    <Layout>
-      Get Playlists
+    <Layout container={false} section={false}>
+      <section className="section has-background-blue">
+        <div className="container">
+          {
+            playlists !== null
+              ? <section>
+                <h2 className="title is-size-4 has-text-white">Mes playlists terminées</h2>
+                <PlaylistCardList playlists={playlists} onPlaylistDelete={() => null} />
+              </section>
+              : null
+          }
+        </div>
+      </section>
 
-      <div>
-        PLAYLISTS
-      {
-          playlists !== null
-            ? <div>
-              {playlists.map((playlist) =>
-                <div key={playlist._id}>
-                  <Link
-                    to={ROUTES.GET_PLAYLIST.replace(':id', playlist._id)}
+      <section className="section">
+        <div className="container">
+          {
+            editablePlaylists !== null
+              ? <section>
+                <h2 className="title is-size-4 has-text-white">Mes playlists en cours</h2>
+                <PlaylistCardList playlists={editablePlaylists} onPlaylistDelete={() => null} test />
+              </section>
+              : null
+          }
+        </div>
+      </section>
 
-                  >
-                    {playlist.name || playlist._id}
-                  </Link>
-                </div>
-              )}
-            </div>
-            : null
-        }
-
-      </div>
-
-      <div>
-        EDITABLE PLAYLIST
-        {
-          editablePlaylists !== null
-            ? <div>
-              {editablePlaylists.map((playlist) =>
-                <div key={playlist._id}>
-                  <Link
-                    to={ROUTES.GET_PLAYLIST.replace(':id', playlist._id)}
-
-                  >
-                    {playlist.name || playlist._id}
-                  </Link>
-                </div>
-              )}
-            </div>
-            : null
-        }
-      </div>
     </Layout>
   );
 }
