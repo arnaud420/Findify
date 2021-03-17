@@ -32,7 +32,7 @@ const Playlists = () => {
           playlists !== null
             ? <div>
               {playlists.map((playlist) =>
-                <div>
+                <div key={playlist._id}>
                   <Link
                     to={ROUTES.GET_PLAYLIST.replace(':id', playlist._id)}
 
@@ -53,7 +53,7 @@ const Playlists = () => {
           editablePlaylists !== null
             ? <div>
               {editablePlaylists.map((playlist) =>
-                <div>
+                <div key={playlist._id}>
                   <Link
                     to={ROUTES.GET_PLAYLIST.replace(':id', playlist._id)}
 

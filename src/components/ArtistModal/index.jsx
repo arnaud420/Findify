@@ -4,8 +4,9 @@ import { truncateString, getArtistBio, getFirstParagraphLength } from '../../hel
 import TrackBoxList from '../TrackBoxList';
 import { closeModal } from '../../actions/modal';
 import './ArtistModal.scss';
+import Loader from '../Loader';
 
-const ArtsitModal = ({ onAddTrack }) => {
+const ArtsitModal = ({ onAddTrack, isAddable }) => {
   const dispatch = useDispatch();
   const [bio, setBio] = useState(null);
   const [artistFullBio, setArtistFullBio] = useState(null);
@@ -55,7 +56,7 @@ const ArtsitModal = ({ onAddTrack }) => {
       <div className="modal-content">
         {
           isLoading
-            ? 'load'
+            ? <Loader />
             : artist
               ? (
                 <div>
@@ -92,7 +93,13 @@ const ArtsitModal = ({ onAddTrack }) => {
                       <div className="container">
                         <h2 className="title is-5 has-text-white">Top titres</h2>
 
-                        <TrackBoxList tracks={artist.tracks} isDragDisabled isArtistClickable={false} isAddable onAddTrack={onAddTrack} />
+                        <TrackBoxList
+                          tracks={artist.tracks}
+                          isDragDisabled
+                          isArtistClickable={false}
+                          isAddable={isAddable}
+                          onAddTrack={onAddTrack}
+                        />
                       </div>
                     </div>
                   </div>

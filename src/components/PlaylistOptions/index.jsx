@@ -1,13 +1,13 @@
 import { BsDownload, BsMusicNoteList } from 'react-icons/bs';
 import { AiOutlineFieldTime } from 'react-icons/ai';
+import { FaPlay } from "react-icons/fa";
 import { msToTime } from '../../helpers';
 import IconText from '../IconText';
 import TrackSearch from '../TrackSearch';
 
-const PlaylistOptions = ({ tracks, duration, isLoading, onSearchTrack, onSavePlaylist, isEditable }) => {
-
+const PlaylistOptions = ({ playlist, duration, isLoading, onSearchTrack, onSavePlaylist, isEditable }) => {
   return (
-    <>
+    <section className="playlist-options mb-4">
       <div className="columns">
         <div className="column is-6">
           {
@@ -17,7 +17,6 @@ const PlaylistOptions = ({ tracks, duration, isLoading, onSearchTrack, onSavePla
           }
         </div>
         <div className="column is-6 has-text-right">
-
           {
             isEditable
               ? <button className={`button is-link is-rounded has-text-white ${isLoading ? 'is-loading' : ''}`} onClick={onSavePlaylist}>
@@ -26,12 +25,12 @@ const PlaylistOptions = ({ tracks, duration, isLoading, onSearchTrack, onSavePla
                 </span>
                 <span>Sauvegarder et envoyer sur spotify</span>
               </button>
-              : <button className={`button is-link is-rounded has-text-white ${isLoading ? 'is-loading' : ''}`} onClick={onSavePlaylist}>
-              <span className="icon">
-                <BsDownload />
-              </span>
-              <span>Ecouter sur spotify</span>
-            </button>
+              : <a className="button is-link is-rounded has-text-white" href={playlist.uri} target="_blank">
+                <span className="icon">
+                  <FaPlay />
+                </span>
+                <span>Ecouter sur spotify</span>
+              </a>
           }
 
         </div>
@@ -39,7 +38,7 @@ const PlaylistOptions = ({ tracks, duration, isLoading, onSearchTrack, onSavePla
       <div className="columns has-text-white">
         <div className="column is-8 is-flex">
           <IconText className="mr-3" icon={<BsMusicNoteList />}>
-            {tracks.length}
+            {playlist.tracks.length}
           </IconText>
 
           <IconText className="mr-6" icon={<AiOutlineFieldTime />}>
@@ -79,7 +78,7 @@ const PlaylistOptions = ({ tracks, duration, isLoading, onSearchTrack, onSavePla
         }
 
       </div>
-    </>
+    </section>
   );
 }
 

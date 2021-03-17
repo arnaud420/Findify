@@ -113,6 +113,7 @@ const TrackBoxList = ({
                       isDeletable={isDeletable}
                       isAddable={isAddable}
                     />
+                    {provided.placeholder}
                   </div>
                 )}
               </Draggable>
