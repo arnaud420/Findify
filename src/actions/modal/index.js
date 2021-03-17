@@ -19,6 +19,4 @@ export const openModal = (artist) => async (dispatch) => {
   }
 };
 
-export const closeModal = () => ({
-  type: CLOSE_MODAL,
-});
+export const closeModal = () => ({ type: CLOSE_MODAL });

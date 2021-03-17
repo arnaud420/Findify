@@ -3,7 +3,7 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import { Link, useLocation } from 'react-router-dom';
 import config from '../../config';
-import Logo from '../../logo.svg';
+import Logo from '../../assets/images/logo.png';
 import ROUTES from '../../config/routes';
 import './Navbar.scss';
 
@@ -110,7 +110,7 @@ const Navbar = () => {
             className="navbar-item"
             to={ROUTES.HOME}
           >
-            <img src={Logo} alt="logo" width="112" height="28" />
+            <img src={Logo} alt="logo" />
           </Link>
         </div>
 

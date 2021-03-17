@@ -1,13 +1,12 @@
 import { useState } from 'react';
-import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import Layout from '../components/Layout';
 import TrackCardList from '../components/TrackCardList';
 import TrackSearch from '../components/TrackSearch';
-import config from '../config';
 import ROUTES from '../config/routes';
 import { useDispatch } from 'react-redux';
 import { sendErrorNotif } from '../actions/notif';
+import { generatePlaylist } from '../helpers/api';
 
 const CreatePlaylist = () => {
   const dispatch = useDispatch();
@@ -40,12 +39,11 @@ const CreatePlaylist = () => {
     setTracks([...filteredTracks]);
   }
 
-  const generatePlaylist = async () => {
+  const _generatePlaylist = async () => {
     try {
       setIsLoading(true);
-      const { data } = await axios.post(`${config.API_URL}/generate`, { tracks });
+      const data = await generatePlaylist(tracks);
       setIsLoading(false);
-      console.log('data', data);
       history.push(ROUTES.GET_PLAYLIST.replace(':id', data.data._id));
     } catch (error) {
       setIsLoading(false);
@@ -86,7 +84,7 @@ const CreatePlaylist = () => {
                 <div className="has-text-right">
                   <button
                     className={`button is-outlined is-medium is-rounded is-primary ${isLoading ? 'is-loading' : ''}`}
-                    onClick={generatePlaylist}
+                    onClick={_generatePlaylist}
                   >
                     C'est parti !
                 </button>

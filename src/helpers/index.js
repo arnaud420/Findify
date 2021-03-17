@@ -17,5 +17,25 @@ export const msToTime = (duration) => {
   minutes = (minutes < 10) ? '0' + minutes : minutes;
   seconds = (seconds < 10) ? '0' + seconds : seconds;
 
-  return hours + ':' + minutes + ':' + seconds;
+  return `${hours} h ${minutes} min`;
+}
+
+export const getArtistBio = (artist) => {
+  if (artist.strBiographyFR) {
+    return artist.strBiographyFR.replace(/(\r\n|\n\r|\r|\n)/g, '<br>');
+  } else if (artist.strBiographyEN) {
+    return artist.strBiographyEN.replace(/(\r\n|\n\r|\r|\n)/g, '<br>');
+  } else {
+    return null;
+  }
+}
+
+export const getFirstParagraphLength = (artist) => {
+  if (artist.strBiographyFR) {
+    return artist.strBiographyFR.match(/[^\r\n]+/g)[0].length;
+  } else if (artist.strBiographyEN) {
+    return artist.strBiographyEN.match(/[^\r\n]+/g)[0].length;
+  } else {
+    return null;
+  }
 }

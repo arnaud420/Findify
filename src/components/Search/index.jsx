@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
-import { AiOutlineClose } from "react-icons/ai";
+import { AiOutlineClose } from 'react-icons/ai';
+import './Search.scss';
 
-const Search = ({ onSearchChanged, placeholder, isReset = false, size }) => {
+const Search = ({ onSearchChanged, placeholder, isReset = false, size, className }) => {
   const [search, setSearch] = useState('');
   const [timer, setTimer] = useState(null);
 
@@ -26,9 +27,9 @@ const Search = ({ onSearchChanged, placeholder, isReset = false, size }) => {
   }
 
   return (
-    <div className="control has-icons-left has-icons-right">
+    <div className={`control has-icons-left has-icons-right search ${className ? className : ''}`}>
       <input
-        className={`input ${size === 'medium' ? 'is-medium' : ''}`}
+        className={`text-input input ${size === 'medium' ? 'is-medium' : ''}`}
         type="text"
         value={search}
         placeholder={placeholder}

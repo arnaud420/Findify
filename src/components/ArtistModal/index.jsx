@@ -1,31 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { truncateString } from '../../helpers';
-import './ArtistModal.scss';
+import { truncateString, getArtistBio, getFirstParagraphLength } from '../../helpers';
 import TrackBoxList from '../TrackBoxList';
 import { closeModal } from '../../actions/modal';
+import './ArtistModal.scss';
 
-const getArtistBio = (artist) => {
-  if (artist.strBiographyFR) {
-    return artist.strBiographyFR.replace(/(\r\n|\n\r|\r|\n)/g, '<br>');
-  } else if (artist.strBiographyEN) {
-    return artist.strBiographyEN.replace(/(\r\n|\n\r|\r|\n)/g, '<br>');
-  } else {
-    return null;
-  }
-}
-
-const getFirstParagraphLength = (artist) => {
-  if (artist.strBiographyFR) {
-    return artist.strBiographyFR.match(/[^\r\n]+/g)[0].length;
-  } else if (artist.strBiographyEN) {
-    return artist.strBiographyEN.match(/[^\r\n]+/g)[0].length;
-  } else {
-    return null;
-  }
-}
-
-const ArtsitModal = () => {
+const ArtsitModal = ({ onAddTrack }) => {
   const dispatch = useDispatch();
   const [bio, setBio] = useState(null);
   const [artistFullBio, setArtistFullBio] = useState(null);
@@ -112,7 +92,7 @@ const ArtsitModal = () => {
                       <div className="container">
                         <h2 className="title is-5 has-text-white">Top titres</h2>
 
-                        <TrackBoxList tracks={artist.tracks} isDragDisabled isArtistClickable={false} isAddable />
+                        <TrackBoxList tracks={artist.tracks} isDragDisabled isArtistClickable={false} isAddable onAddTrack={onAddTrack} />
                       </div>
                     </div>
                   </div>

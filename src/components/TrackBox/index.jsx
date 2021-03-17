@@ -42,7 +42,7 @@ const TrackBox = ({ track, onPlay, onDelete, onAdd, isPlaying, isArtistClickable
               <div className="column">
                 <div className="is-pulled-right">
                   <span
-                    className={`icon is-size-4 mr-4 ${track.preview_url ? 'is-clickable has-text-primary' : 'c-grey'}`}
+                    className={`icon is-size-4 mr-6 ${track.preview_url ? 'is-clickable has-text-primary' : 'c-grey'}`}
                     onClick={track.preview_url ? () => onPlay(track) : undefined}
                   >
                     {
@@ -55,7 +55,7 @@ const TrackBox = ({ track, onPlay, onDelete, onAdd, isPlaying, isArtistClickable
                     isDeletable
                       ? (
                         <span
-                          className="icon has-text-primary is-size-4 mr-3 is-clickable"
+                          className="icon has-text-primary is-size-4 is-clickable"
                           onClick={() => onDelete(track)}
                         >
                           <FiTrash2 />
@@ -67,7 +67,7 @@ const TrackBox = ({ track, onPlay, onDelete, onAdd, isPlaying, isArtistClickable
                     isAddable
                       ? (
                         <span
-                          className="icon has-text-primary is-size-4 mr-3 is-clickable"
+                          className="icon has-text-primary is-size-4 is-clickable"
                           onClick={() => onAdd(track)}
                         >
                           <MdPlaylistAdd />

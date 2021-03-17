@@ -1,34 +1,23 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { BsMusicNoteList } from 'react-icons/bs';
-import { TiMediaFastForward } from 'react-icons/ti';
 import Layout from '../components/Layout';
 import TrackCard from '../components/TrackCard';
-import TrackSearch from '../components/TrackSearch';
-import ROUTES from '../config/routes';
-import { msToTime } from '../helpers';
-import { getPlaylist, editPlaylist } from '../helpers/api';
+import { breadcrumb } from '../config/routes';
+import { getPlaylist, editPlaylist, savePlaylistToSpotify } from '../helpers/api';
 import Breadcrumb from '../components/Breadcrumb';
 import TrackBoxList from '../components/TrackBoxList';
 import ArtsitModal from '../components/ArtistModal';
+import PlaylistOptions from '../components/PlaylistOptions';
 
 const Playlist = () => {
   const { id } = useParams();
   const [generatedTracks, setGeneratedTracks] = useState(null);
   const [tracks, setTracks] = useState(null);
+  const [isPublic, setIsPublic] = useState(false);
   const [duration, setDuration] = useState(0);
   const [name, setName] = useState('');
-
-  const breadcrumbLinks = [
-    {
-      link: ROUTES.GET_PLAYLISTS,
-      label: 'Mes playlists',
-    },
-    {
-      link: false,
-      label: 'Playlist ...',
-    }
-  ];
+  const [isLoading, setIsLoading] = useState(false);
+  const [isEditable, setIsEditable] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -40,6 +29,9 @@ const Playlist = () => {
         if (data.name) {
           setName(data.name);
         }
+        if (data.spotifyId === null) {
+          setIsEditable(true);
+        }
       } catch (error) {
         console.log('error', error);
       }
@@ -50,9 +42,9 @@ const Playlist = () => {
     if (tracks && tracks.length >= 1) {
       let durationMs = 0;
       for (let i = 0; i < tracks.length; i++) {
+        if (!tracks[i].duration_ms) return;
         durationMs += tracks[i].duration_ms;
       }
-      console.log('durationMs', durationMs);
       setDuration(durationMs);
     }
   }, [tracks])
@@ -63,7 +55,7 @@ const Playlist = () => {
     ]);
   }
 
-  const onTrackClicked = (track) => {
+  const addTrack = (track) => {
     const trackAlreadyInList = tracks.find((t) => track.id === t.id);
 
     if (trackAlreadyInList) {
@@ -81,9 +73,10 @@ const Playlist = () => {
 
   const editCurrentPlaylist = async (body) => {
     try {
-      await editPlaylist(id, body);
+      return await editPlaylist(id, body);
     } catch (error) {
       console.log('error', error);
+      throw error;
     }
   }
 
@@ -96,11 +89,26 @@ const Playlist = () => {
     setTracks(newList);
   };
 
+  const savePlaylist = async () => {
+    try {
+      console.log('saveplaylist');
+      setIsLoading(true);
+      await editCurrentPlaylist({ tracks });
+      await savePlaylistToSpotify(id);
+      setIsLoading(false);
+    } catch (error) {
+      setIsLoading(false);
+      console.log('err', error);
+    }
+  }
+
+  console.log('isEditable', isEditable);
+
   return (
     <Layout>
-      <Breadcrumb items={breadcrumbLinks} />
+      {/* <Breadcrumb items={breadcrumb.playlistBreadCrumb()} /> */}
 
-      <ArtsitModal />
+      <ArtsitModal onAddTrack={addTrack} />
 
       <section className="hero">
         <div className="hero-body">
@@ -116,8 +124,9 @@ const Playlist = () => {
                         name="name"
                         placeholder="Nom de ta playlist"
                         value={name}
-                        onChange={(e) => setName(e.value)}
-                        onBlur={(e) => editCurrentPlaylist({ name: e.target.value })}
+                        disabled={isEditable ? false : true}
+                        onChange={isEditable ? (e) => setName(e.value) : undefined}
+                        onBlur={isEditable ? (e) => editCurrentPlaylist({ name: e.target.value }) : undefined}
                       />
                     </div>
                   </div>
@@ -144,25 +153,21 @@ const Playlist = () => {
         tracks
           ? (
             <>
-              <div className="columns">
-                <div className="column is-6">
-                  <div className="box">
-                    <p className="mb-2">
-                      <span><span className="icon mb-3"><BsMusicNoteList /></span>{tracks.length}</span>
-                      <span><span className="icon"><TiMediaFastForward /></span>{msToTime(duration)}</span>
-                    </p>
-
-                    <TrackSearch onTrackClicked={onTrackClicked} placeholder="Ajouter une musique à la playlist" />
-                  </div>
-                </div>
-              </div>
+              <PlaylistOptions
+                tracks={tracks}
+                duration={duration}
+                onSavePlaylist={savePlaylist}
+                onSearchTrack={addTrack}
+                isLoading={isLoading}
+                idEditable={isEditable}
+              />
 
               <TrackBoxList tracks={tracks} onDelete={removeTrack} onDragEnd={dragTrack} isDeletable />
             </>
           )
           : null
       }
-    </Layout>
+    </Layout >
   );
 }
 

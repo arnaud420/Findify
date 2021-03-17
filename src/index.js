@@ -2,11 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import Cookies from 'js-cookie';
-import App from './App';
+import App from './App.jsx';
 import store from './store';
 import reportWebVitals from './reportWebVitals';
 import { authUser } from './actions/auth';
-import './styles/app.scss';
+import './assets/styles/app.scss';
 
 const token = Cookies.get('access_token');
 if (token) {

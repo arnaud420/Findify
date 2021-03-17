@@ -1,0 +1,15 @@
+footer.footer.is-footer {
+  background-color: #5b1dec;
+  position: relative;
+
+  img {
+    max-height: 5rem;
+  }
+
+  &.is-sticky {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+}

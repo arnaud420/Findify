@@ -7,7 +7,17 @@ export const getPlaylist = async (id) => {
     return data.data;
   } catch (error) {
     console.log('error', error);
-    throw (error);
+    throw new Error(error);
+  }
+};
+
+export const getPlaylists = async (id) => {
+  try {
+    const { data } = await axios.get(`${config.API_URL}/playlists`);
+    return data.data;
+  } catch (error) {
+    console.log('error', error);
+    throw new Error(error);
   }
 };
 
@@ -17,7 +27,7 @@ export const getArtistInfo = async (id) => {
     return data;
   } catch (error) {
     console.log('error', error);
-    throw (error);
+    throw new Error(error);
   }
 };
 
@@ -28,6 +38,27 @@ export const editPlaylist = async (id, body) => {
     return data.data;
   } catch (error) {
     console.log('error', error);
-    throw (error);
+    throw new Error(error);
   }
 };
+
+export const savePlaylistToSpotify = async (id) => {
+  try {
+    const data = await axios.post(`${config.API_URL}/playlists/${id}/spotify`);
+    console.log('data', data);
+    return data;
+  } catch (error) {
+    console.log('error', error);
+    throw new Error(error);
+  }
+}
+
+export const generatePlaylist = async (tracks) => {
+  try {
+    const { data } = await axios.post(`${config.API_URL}/generate`, { tracks });
+    return data;
+  } catch (error) {
+    console.log('error', error);
+    throw new Error(error);
+  }
+}

@@ -1,7 +1,11 @@
-@import '../../styles/variables.scss';
+@import '../../assets/styles/variables.scss';
 
 .navbar {
   a.navbar-item.is-active, .navbar-link.is-active {
     color: $link;
+  }
+
+  .navbar-item img {
+    max-height: 2.5rem;
   }
 }

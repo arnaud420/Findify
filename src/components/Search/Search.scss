@@ -1,0 +1,25 @@
+.search.is-custom.control {
+  input {
+    border-color: blue;
+    background-color: transparent;
+    color: blue;
+    border-radius: 290486px;
+
+    &:focus {
+      box-shadow: 0 0 0 0.125em rgba(87, 28, 219, 0.25);
+      color: white;
+    }
+  
+    &::placeholder {
+      color: blue;
+    }
+  }
+
+  .input:focus ~ .icon {
+    color: white;
+  }
+
+  .icon {
+    color: blue;
+  }
+}
