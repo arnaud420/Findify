@@ -5,7 +5,7 @@ import Footer from '../Footer/Footer';
 import Navbar from '../Navbar';
 import './Layout.scss';
 
-const Layout = ({ children, section, container }) => {
+const Layout = ({ children, section, container, className }) => {
   const notif = useSelector(state => state.notif);
 
   if (notif.type && notif.message) {
@@ -21,8 +21,8 @@ const Layout = ({ children, section, container }) => {
       <ToastContainer limit={3} />
       <Navbar />
 
-      <div className={`main-content ${section === false ? null : 'section'}`}>
-        <div className={container === false ? null : 'container'}>
+      <div className={`main-content ${className ? className : ''} ${section === false ? '' : 'section'}`}>
+        <div className={container === false ? '' : 'container'}>
           {children}
         </div>
       </div>

@@ -3,7 +3,7 @@ import './Loader.scss';
 
 const Loader = () => (
   <div className="app-loader">
-    <img src={Logo} />
+    <img src={Logo} alt="logo loader" />
   </div>
 )
 

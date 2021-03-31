@@ -28,6 +28,30 @@
     color: white;
   }
 
+  .media-content {
+    .content {
+      .icon {
+        .is-added {
+          background-color: #e23a05;
+          border-radius: 5px;
+          color: #fff;
+          text-align: center;
+          font-size: 8px;
+          height: 14px;
+          padding: 0px;
+          left: auto;
+          line-height: 14px;
+          min-width: 14px;
+          right: 0;
+          top: 0;
+          width: auto;
+          font-weight: bold;
+          position: absolute;
+        }
+      }
+    }
+  }
+
   .track-preloader {
     display: none;
     position: absolute;

@@ -1,25 +1,38 @@
 import { useEffect, useState } from 'react';
 import Layout from '../components/Layout';
+import Loader from '../components/Loader';
 import PlaylistCardList from '../components/PlaylistCardList';
 import { getPlaylists } from '../helpers/api';
 
 const Playlists = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const [playlists, setPlaylists] = useState(null);
   const [editablePlaylists, setEditablePlaylists] = useState(null);
 
   useEffect(() => {
     (async () => {
       try {
+        setIsLoading(true);
         const data = await getPlaylists();
         const editablePlaylists = data.filter((p) => p.spotifyId === null);
         const playlists = data.filter((p) => p.spotifyId !== null);
         setPlaylists(playlists);
         setEditablePlaylists(editablePlaylists);
+        setIsLoading(false);
       } catch (error) {
+        setIsLoading(false);
         console.log('error', error);
       }
     })()
   }, []);
+
+  if (isLoading) {
+    return (
+      <Layout className="is-flex justify-center align-center">
+        <Loader />
+      </Layout>
+    )
+  }
 
   return (
     <Layout container={false} section={false}>

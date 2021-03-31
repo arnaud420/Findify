@@ -53,12 +53,12 @@ const ArtsitModal = ({ onAddTrack, isAddable }) => {
   return (
     <div className={`modal modal-artist ${isOpen ? 'is-active' : ''}`}>
       <div className="modal-background" onClick={() => dispatch(closeModal())}></div>
-      <div className="modal-content">
-        {
-          isLoading
-            ? <Loader />
-            : artist
-              ? (
+      {
+        isLoading
+          ? <Loader />
+          : <div className="modal-content">
+            {
+              artist && (
                 <div>
                   <section className="hero" style={{ backgroundImage: `url('${artist.images[0].url}')` }}>
                     <div className="hero-body">
@@ -73,19 +73,16 @@ const ArtsitModal = ({ onAddTrack, isAddable }) => {
                     </div>
                   </section>
                   {
-                    bio
-                      ?
+                    bio && (
                       <div className="section">
                         <div className="container">
                           <p dangerouslySetInnerHTML={{ __html: bio }} />
                           {
-                            displayBtn
-                              ? <button className="mt-2 button is-text" onClick={toggleBio}>{labelBtn}</button>
-                              : null
+                            displayBtn && <button className="mt-2 button is-text" onClick={toggleBio}>{labelBtn}</button>
                           }
                         </div>
                       </div>
-                      : null
+                    )
                   }
 
                   <div className="top-tracks-section">
@@ -105,11 +102,11 @@ const ArtsitModal = ({ onAddTrack, isAddable }) => {
                   </div>
                 </div>
               )
-              : null
-        }
-      </div >
+            }
+          </div >
+      }
       <button className="modal-close is-large" aria-label="close" onClick={() => dispatch(closeModal())} />
-    </div >
+    </div>
   );
 };
 

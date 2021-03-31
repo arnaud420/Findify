@@ -43,6 +43,7 @@ const Playlist = () => {
     })()
   }, [id])
 
+  //TODO: A chaque modification de la playlist, la mettre a jour en base
   useEffect(() => {
     if (playlist && playlist.tracks && playlist.tracks.length >= 1) {
       let durationMs = 0;
@@ -125,7 +126,9 @@ const Playlist = () => {
 
   if (isLoading) {
     return (
-      <Loader />
+      <Layout className="is-flex justify-center align-center">
+        <Loader />
+      </Layout>
     )
   }
 

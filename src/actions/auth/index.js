@@ -10,11 +10,12 @@ export const authUser = (token) => async (dispatch) => {
     setAuthorizationToken(token);
     await dispatch(getUser());
   } catch (error) {
+    //TODO: gérer les erreurs pour remettre l'access token si le refresh est envoyé
     console.log('auth error', error);
-    Cookies.remove('access_token');
-    Cookies.remove('refresh_token');
-    setAuthorizationToken();
-    dispatch({ type: UNAUTH_USER });
-    dispatch(sendErrorNotif(error.response.data.data || error.message));
+    // Cookies.remove('access_token');
+    // Cookies.remove('refresh_token');
+    // setAuthorizationToken();
+    // dispatch({ type: UNAUTH_USER });
+    // dispatch(sendErrorNotif(error.response.data.data || error.message));
   }
 };

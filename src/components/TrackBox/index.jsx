@@ -1,12 +1,23 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import { useDispatch } from 'react-redux';
 import { FiTrash2 } from 'react-icons/fi';
 import { FaPlay, FaStop } from "react-icons/fa";
 import { MdPlaylistAdd } from "react-icons/md";
-import './TrackBox.scss';
 import { openModal } from '../../actions/modal';
+import { useEffect, useState } from 'react';
+import './TrackBox.scss';
 
 const TrackBox = ({ track, onPlay, onDelete, onAdd, isPlaying, isArtistClickable, isDeletable, isAddable }) => {
   const dispatch = useDispatch();
+  const [isAdded, setIsAdded] = useState(false);
+
+  useEffect(() => {
+    if (isAdded) {
+      setTimeout(() => {
+        setIsAdded(false);
+      }, 3000);
+    }
+  }, [isAdded])
 
   return (
     <div className={`box track-box mb-0 ${isPlaying && isPlaying.id === track.id ? 'is-playing' : ''}`}>
@@ -27,13 +38,19 @@ const TrackBox = ({ track, onPlay, onDelete, onAdd, isPlaying, isArtistClickable
           </figure>
         </div>
         <div className="media-content">
-          <div clas sName="content">
+          <div className="content">
             <div className="columns">
               <div className="column is-9">
                 <p className="mb-0">
                   {
                     isArtistClickable
-                      ? <strong><a onClick={() => dispatch(openModal(track.album.artists[0]))}>{track.album.artists[0].name}</a></strong>
+                      ? <strong>
+                        <a
+                          onClick={() => dispatch(openModal(track.album.artists[0]))}
+                        >
+                          {track.album.artists[0].name}
+                        </a>
+                      </strong>
                       : <strong>{track.album.artists[0].name}</strong>
                   }
                 </p>
@@ -53,27 +70,29 @@ const TrackBox = ({ track, onPlay, onDelete, onAdd, isPlaying, isArtistClickable
                   </span>
                   {
                     isDeletable
-                      ? (
-                        <span
-                          className="icon has-text-primary is-size-4 is-clickable"
-                          onClick={() => onDelete(track)}
-                        >
-                          <FiTrash2 />
-                        </span>
-                      )
-                      : null
+                    && (
+                      <span
+                        className="icon is-size-4 has-text-primary is-clickable"
+                        onClick={() => onDelete(track)}
+                      >
+                        <FiTrash2 />
+                      </span>
+                    )
                   }
                   {
                     isAddable
-                      ? (
-                        <span
-                          className="icon has-text-primary is-size-4 is-clickable"
-                          onClick={() => onAdd(track)}
-                        >
-                          <MdPlaylistAdd />
-                        </span>
-                      )
-                      : null
+                    && (
+                      <span
+                        className="icon is-size-4 has-text-primary is-clickable is-relative"
+                        onClick={() => {
+                          onAdd(track);
+                          setIsAdded(true);
+                        }}
+                      >
+                        {isAdded && <span className="is-added">+1</span>}
+                        <MdPlaylistAdd />
+                      </span>
+                    )
                   }
                 </div>
               </div>
@@ -81,7 +100,7 @@ const TrackBox = ({ track, onPlay, onDelete, onAdd, isPlaying, isArtistClickable
           </div>
         </div>
       </article>
-    </div>
+    </div >
   );
 };
 
