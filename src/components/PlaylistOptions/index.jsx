@@ -5,7 +5,17 @@ import { msToTime } from '../../helpers';
 import IconText from '../IconText';
 import TrackSearch from '../TrackSearch';
 
-const PlaylistOptions = ({ playlist, duration, isLoading, onSearchTrack, onSavePlaylist, isEditable, onSetPlaylistType, playlistType }) => {
+const PlaylistOptions = ({
+  playlist,
+  duration,
+  isLoading,
+  onSearchTrack,
+  onSavePlaylist,
+  isEditable,
+  onSetPlaylistType,
+  playlistType,
+  onDurationChange,
+}) => {
 
   return (
     <section className="playlist-options mb-4">
@@ -81,11 +91,11 @@ const PlaylistOptions = ({ playlist, duration, isLoading, onSearchTrack, onSaveP
           isEditable
             ? <div className="column has-text-right">
               <div className="select is-link">
-                <select>
-                  <option>Durée</option>
-                  <option>1h</option>
-                  <option>2h</option>
-                  <option>3h</option>
+                <select onChange={onDurationChange}>
+                  <option value="0">Durée</option>
+                  <option value="1">1h</option>
+                  <option value="2">2h</option>
+                  <option value="3">3h</option>
                 </select>
               </div>
             </div>

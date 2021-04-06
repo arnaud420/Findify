@@ -8,7 +8,8 @@ const PlaylistCardList = ({ playlists, onPlaylistDelete }) => {
     infinite: true,
     speed: 500,
     slidesToShow: 4,
-    slidesToScroll: 4
+    slidesToScroll: 4,
+    touchMove: false,
   });
 
   useEffect(() => {

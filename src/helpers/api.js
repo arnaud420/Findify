@@ -55,8 +55,20 @@ export const savePlaylistToSpotify = async (id) => {
 
 export const generatePlaylist = async (tracks) => {
   try {
-    const { data } = await axios.post(`${config.API_URL}/generate`, { tracks });
+    const { data } = await axios.post(`${config.API_URL}/playlists/generate`, { tracks });
     return data;
+  } catch (error) {
+    console.log('error', error);
+    throw new Error(error);
+  }
+}
+
+export const reGeneratePlaylist = async (id, value) => {
+  try {
+    const { data } = await axios.patch(`${config.API_URL}/playlists/${id}/regenerate`, {
+      duration: value,
+    });
+    return data.data;
   } catch (error) {
     console.log('error', error);
     throw new Error(error);

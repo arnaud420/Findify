@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Layout from '../components/Layout';
 import { breadcrumb } from '../config/routes';
-import { getPlaylist, editPlaylist, savePlaylistToSpotify } from '../helpers/api';
+import { getPlaylist, editPlaylist, savePlaylistToSpotify, reGeneratePlaylist } from '../helpers/api';
 import Breadcrumb from '../components/Breadcrumb';
 import TrackBoxList from '../components/TrackBoxList';
 import ArtsitModal from '../components/ArtistModal';
@@ -18,6 +18,7 @@ const Playlist = () => {
   const [duration, setDuration] = useState(0);
   const [name, setName] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [isRegeneratingPlaylist, setIsReneratingPlaylist] = useState(false);
   const [isSendingToSpotify, setIsSendingToSpotify] = useState(false);
   const [isEditable, setIsEditable] = useState(false);
 
@@ -124,6 +125,25 @@ const Playlist = () => {
     }
   }
 
+  const onDurationChange = async (e) => {
+    const value = e.target.value;
+    if (value === '0') return;
+
+    try {
+      setIsReneratingPlaylist(true);
+      const data = await reGeneratePlaylist(id, value);
+      setPlaylist({
+        ...playlist,
+        tracks: data,
+      });
+      setIsReneratingPlaylist(false);
+      console.log('data', data);
+    } catch(error) {
+      setIsReneratingPlaylist(false);
+      console.log('err', error);
+    }
+  }
+
   if (isLoading) {
     return (
       <Layout className="is-flex justify-center align-center">
@@ -138,9 +158,7 @@ const Playlist = () => {
     )
   }
 
-  const onSetPlaylistType = (e) => {
-    setPlaylistType(e.target.value);
-  }
+  console.log('playlist', playlist);
 
   return (
     <Layout>
@@ -193,16 +211,21 @@ const Playlist = () => {
                 isLoading={isSendingToSpotify}
                 isEditable={isEditable}
                 playlistType={playlistType}
-                onSetPlaylistType={onSetPlaylistType}
+                onSetPlaylistType={(e) => setPlaylistType(e.target.value)}
+                onDurationChange={onDurationChange}
               />
 
-              <TrackBoxList 
-                tracks={playlist.tracks} 
-                onDelete={removeTrack} 
-                onDragEnd={dragTrack} 
-                isDeletable={isEditable}
-                isDragDisabled={isEditable ? false : true}
-              />
+              {
+                isRegeneratingPlaylist
+                ? <Loader />
+                : <TrackBoxList 
+                    tracks={playlist.tracks} 
+                    onDelete={removeTrack} 
+                    onDragEnd={dragTrack} 
+                    isDeletable={isEditable}
+                    isDragDisabled={isEditable ? false : true}
+                  /> 
+              }
             </>
           )
           : null
