@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { truncateString, getArtistBio, getFirstParagraphLength } from '../../helpers';
-import TrackBoxList from '../TrackBoxList';
-import { closeModal } from '../../actions/modal';
+import { truncateString, getArtistBio, getFirstParagraphLength } from '../../../helpers';
+import TrackBoxList from '../../../components/TrackBoxList';
+import { closeModal } from '../../../actions/modal';
+import Loader from '../../../components/Loader';
 import './ArtistModal.scss';
-import Loader from '../Loader';
 
 const ArtsitModal = ({ onAddTrack, isAddable }) => {
   const dispatch = useDispatch();

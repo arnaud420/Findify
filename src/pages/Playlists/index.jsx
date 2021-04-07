@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import Layout from '../components/Layout';
-import Loader from '../components/Loader';
-import PlaylistCardList from '../components/PlaylistCardList';
-import { getPlaylists } from '../helpers/api';
+import Layout from '../../components/Layout';
+import Loader from '../../components/Loader';
+import PlaylistCardList from './PlaylistCardList';
+import { getPlaylists } from '../../helpers/api';
 
 const Playlists = () => {
   const [isLoading, setIsLoading] = useState(true);

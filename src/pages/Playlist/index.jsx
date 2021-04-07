@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import Layout from '../components/Layout';
-import { breadcrumb } from '../config/routes';
-import { getPlaylist, editPlaylist, savePlaylistToSpotify, reGeneratePlaylist } from '../helpers/api';
-import Breadcrumb from '../components/Breadcrumb';
-import TrackBoxList from '../components/TrackBoxList';
-import ArtsitModal from '../components/ArtistModal';
-import PlaylistOptions from '../components/PlaylistOptions';
-import Loader from '../components/Loader';
-import TrackCardList from '../components/TrackCardList';
+import Layout from '../../components/Layout';
+import { breadcrumb } from '../../config/routes';
+import { getPlaylist, editPlaylist, savePlaylistToSpotify, reGeneratePlaylist } from '../../helpers/api';
+import Breadcrumb from '../../components/Breadcrumb';
+import TrackBoxList from '../../components/TrackBoxList';
+import ArtsitModal from './ArtistModal';
+import PlaylistOptions from './PlaylistOptions';
+import Loader from '../../components/Loader';
+import TrackCardList from '../../components/TrackCardList';
 
 const Playlist = () => {
   const { id } = useParams();

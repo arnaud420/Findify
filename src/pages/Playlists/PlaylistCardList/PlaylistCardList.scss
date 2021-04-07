@@ -1,0 +1,8 @@
+.slick-slider {
+  .slick-next:before, .slick-prev:before {
+    content: none;
+  }
+  .slick-dots li button:before {
+    color: white;
+  }
+}

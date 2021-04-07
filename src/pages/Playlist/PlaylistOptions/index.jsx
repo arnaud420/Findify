@@ -1,9 +1,9 @@
 import { BsDownload, BsMusicNoteList } from 'react-icons/bs';
 import { AiOutlineFieldTime } from 'react-icons/ai';
 import { FaPlay } from "react-icons/fa";
-import { msToTime } from '../../helpers';
-import IconText from '../IconText';
-import TrackSearch from '../TrackSearch';
+import { msToTime } from '../../../helpers';
+import IconText from '../../../components/IconText';
+import TrackSearch from '../../../components/TrackSearch';
 
 const PlaylistOptions = ({
   playlist,
