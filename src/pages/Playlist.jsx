@@ -27,7 +27,6 @@ const Playlist = () => {
       try {
         setIsLoading(true);
         const data = await getPlaylist(id);
-        console.log('DATA', data);
         setPlaylist(data);
         setGeneratedTracks(data.generatedTracks);
         if (data.name) {
@@ -39,7 +38,7 @@ const Playlist = () => {
         setIsLoading(false);
       } catch (error) {
         setIsLoading(false);
-        console.log('error', error);
+        console.error('error', error);
       }
     })()
   }, [id])
@@ -91,7 +90,7 @@ const Playlist = () => {
     try {
       return await editPlaylist(id, body);
     } catch (error) {
-      console.log('error', error);
+      console.error('error', error);
       throw error;
     }
   }
@@ -121,7 +120,7 @@ const Playlist = () => {
       setPlaylist(newPlaylist.data.data);
     } catch (error) {
       setIsSendingToSpotify(false);
-      console.log('err', error);
+      console.error('err', error);
     }
   }
 
@@ -137,10 +136,9 @@ const Playlist = () => {
         tracks: data,
       });
       setIsReneratingPlaylist(false);
-      console.log('data', data);
     } catch(error) {
       setIsReneratingPlaylist(false);
-      console.log('err', error);
+      console.error('err', error);
     }
   }
 
@@ -157,8 +155,6 @@ const Playlist = () => {
       <div>La playlist n'existe pas</div>
     )
   }
-
-  console.log('playlist', playlist);
 
   return (
     <Layout>

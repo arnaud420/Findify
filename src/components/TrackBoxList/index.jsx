@@ -1,69 +1,59 @@
-import { useEffect, useState } from "react";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import TrackBox from "../TrackBox";
-
-const isPlayingInitialState = {
-  status: '',
-  audio: null,
-  id: null,
-};
+import { useEffect } from 'react';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import { useDispatch, useSelector } from 'react-redux';
+import { changeTrack, playTrack, resetTrack, stopTrack } from '../../actions/playlist';
+import TrackBox from '../TrackBox';
 
 const TrackBoxList = ({
-  tracks, onAddTrack, onDelete, onDragEnd, isDragDisabled = false,
-  isArtistClickable = true, isDeletable, isAddable,
+  tracks,
+  onAddTrack,
+  onDelete,
+  onDragEnd,
+  isDragDisabled = false,
+  isArtistClickable = true,
+  isDeletable,
+  isAddable,
+
 }) => {
-  const [isPlaying, setIsPlaying] = useState(isPlayingInitialState);
+  const dispatch = useDispatch();
+  const { isPlaying } = useSelector((state) => state.playlist);
+
+  useEffect(() => () => {
+    dispatch(stopTrack());
+  }, [])
 
   useEffect(() => {
+    if (isPlaying.status === '') return;
+
     if (isPlaying.status === 'play') {
       isPlaying.audio.play();
-      isPlaying.audio.addEventListener('ended', () => setIsPlaying(isPlayingInitialState));
+      isPlaying.audio.addEventListener('ended', () => dispatch(resetTrack()));
     }
     if (isPlaying.status === 'stop') {
-      stopTrack();
-    }
-
-    return () => {
-      if (isPlaying.status !== '') {
-        stopTrack();
-      }
+      dispatch(resetTrack());
     }
   }, [isPlaying]);
-
-  const playTrack = (track) => ({
-    status: 'play',
-    id: track.id,
-    audio: new Audio(track.preview_url),
-  });
-
-  const stopTrack = () => {
-    isPlaying.audio.pause();
-    isPlaying.audio.currentTime = 0;
-  }
 
   const onPlayTrack = async (track) => {
     // a l'initialisation
     if (!isPlaying.id) {
-      setIsPlaying(playTrack(track));
+      dispatch(playTrack(track));
     }
 
     // au changement de musique
     if (isPlaying.status === 'play' && isPlaying.id !== track.id) {
-      await setIsPlaying({ ...isPlaying, status: 'stop' });
-      setIsPlaying(playTrack(track));
+      dispatch(changeTrack(track));
     }
 
     // stop
     if (isPlaying.status === 'play' && isPlaying.id === track.id) {
-      await setIsPlaying({ ...isPlaying, status: 'stop' });
-      setIsPlaying(isPlayingInitialState);
+      dispatch(stopTrack());
     }
   };
 
   const onDeleteTrack = async (track) => {
     if (isPlaying.status === 'play' && isPlaying.id === track.id) {
-      await setIsPlaying({ ...isPlaying, status: 'stop' });
-      setIsPlaying(isPlayingInitialState);
+      dispatch(stopTrack());
     }
     onDelete(track);
   }

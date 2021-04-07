@@ -30,9 +30,6 @@ const Navbar = () => {
   const { pathname } = location;
   const { user, isAuthenticated } = useSelector((state) => state.auth);
 
-  console.log('user', user);
-  console.log('isAuthenticated from navbar', isAuthenticated);
-
   // const logout = async () => {
   //   const { data } = await axios.get(`${config.API_URL}/logout`);
   //   if (data.success) {

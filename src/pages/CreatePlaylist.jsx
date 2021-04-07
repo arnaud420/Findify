@@ -15,7 +15,6 @@ const CreatePlaylist = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const onTrackClicked = (track) => {
-    console.log('tracks', tracks, tracks.length);
     if (tracks.length === 3) {
       return dispatch(sendErrorNotif('Maximum de musique atteint !'));
     }

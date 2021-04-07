@@ -28,8 +28,6 @@ const PlaylistCardList = ({ playlists, onPlaylistDelete }) => {
     return null;
   }
 
-  console.log(settings);
-
   return (
     <Slider {...settings}>
       {

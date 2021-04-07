@@ -14,8 +14,6 @@ const { API_URL } = config;
 const Home = () => {
   const { isAuthenticated } = useSelector((state) => state.auth);
 
-  console.log('isAuthenticated from home', isAuthenticated);
-
   return (
     <Layout section={false} container={false}>
       <section className="section has-background-blue">
