@@ -81,7 +81,7 @@ const ArtsitModal = ({ onAddTrack, isAddable }) => {
                         <div className="container">
                           <p dangerouslySetInnerHTML={{ __html: bio }} />
                           {
-                            displayBtn && <button className="mt-2 button is-text" onClick={toggleBio}>{labelBtn}</button>
+                            displayBtn && <button className="mt-4 button is-text" onClick={toggleBio}>{labelBtn}</button>
                           }
                         </div>
                       </div>
