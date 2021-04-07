@@ -38,6 +38,12 @@ const ArtsitModal = ({ onAddTrack, isAddable }) => {
         setDisplayBtn(true);
       }
     }
+    else {
+      setBio(null);
+      setArtistFullBio(null);
+      setMaxLength(null);
+      setDisplayBtn(false);
+    }
   }, [artist])
 
   const toggleBio = () => {
@@ -66,9 +72,6 @@ const ArtsitModal = ({ onAddTrack, isAddable }) => {
                         <p className="title">
                           {artist.name}
                         </p>
-                        <p className="subtitle">
-                          Hero subtitle
-                    </p>
                       </div>
                     </div>
                   </section>
