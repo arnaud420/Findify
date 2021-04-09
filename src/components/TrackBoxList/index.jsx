@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeTrack, playTrack, resetTrack, stopTrack } from '../../actions/playlist';
-import { sendErrorNotif } from '../../actions/notif';
 import TrackBox from '../TrackBox';
 
 const TrackBoxList = ({
@@ -20,7 +19,6 @@ const TrackBoxList = ({
   const { isPlaying } = useSelector((state) => state.playlist);
 
   const playAudio = () => {
-    console.log('playaudio');
     const player = isPlaying.audio.play();
     if (player) {
       player
@@ -38,7 +36,6 @@ const TrackBoxList = ({
   }, [])
 
   useEffect(() => {
-    console.log('playing useEff');
     if (isPlaying.status === '') return;
 
     if (isPlaying.status === 'play') {

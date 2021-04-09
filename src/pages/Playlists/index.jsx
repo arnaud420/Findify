@@ -28,6 +28,17 @@ const Playlists = () => {
     })()
   }, []);
 
+  const renderPlaylistList = (title, playlists, hasBlueBg = false) => (
+    <section className={`section ${hasBlueBg ? 'has-background-blue' : ''}`}>
+      <div className="container">
+        <section>
+          <h2 className="title is-size-4 has-text-white">{title}</h2>
+          <PlaylistCardList playlists={playlists} onPlaylistDelete={() => null} />
+        </section>
+      </div>
+    </section>
+  )
+
   if (isLoading) {
     return (
       <Layout className="is-flex justify-center align-center">
@@ -54,26 +65,12 @@ const Playlists = () => {
 
       {
         playlists !== null && playlists.length >= 1
-        && <section className="section has-background-blue">
-          <div className="container">
-            <section>
-              <h2 className="title is-size-4 has-text-white">Mes playlists terminées</h2>
-              <PlaylistCardList playlists={playlists} onPlaylistDelete={() => null} />
-            </section>
-          </div>
-        </section>
+        && renderPlaylistList('Mes playlists terminées', playlists, true)
       }
 
       {
         editablePlaylists !== null && editablePlaylists.length >= 1
-        && <section className="section">
-          <div className="container">
-            <section>
-              <h2 className="title is-size-4 has-text-white">Mes playlists en cours</h2>
-              <PlaylistCardList playlists={editablePlaylists} onPlaylistDelete={() => null} test />
-            </section>
-          </div>
-        </section>
+        && renderPlaylistList('Mes playlists en cours', editablePlaylists)
       }
 
     </Layout >

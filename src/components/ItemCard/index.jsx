@@ -15,10 +15,10 @@ const RenderComponent = ({ children, isLink, item }) => {
 }
 
 const ItemCard = ({ item, onDelete, isInversed, isLink }) => {
-  const renderTrash = () => (
+  const renderTrash = (hasPadding = false) => (
     onDelete
       ? (
-        <span className="is-clickable title is-6 has-text-danger _is-hoverable">
+        <span className={`is-clickable title is-6 has-text-danger _is-hoverable ${hasPadding ? 'pl-2' : ''}`}>
           <span onClick={() => onDelete(item)}><FiTrash2 /></span>
         </span>
       )
@@ -56,7 +56,7 @@ const ItemCard = ({ item, onDelete, isInversed, isLink }) => {
       </RenderComponent>
       {
         isLink
-          ? renderTrash()
+          ? renderTrash(true)
           : null
       }
     </>
