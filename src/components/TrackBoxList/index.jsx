@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeTrack, playTrack, resetTrack, stopTrack } from '../../actions/playlist';
+import { sendErrorNotif } from '../../actions/notif';
 import TrackBox from '../TrackBox';
 
 const TrackBoxList = ({
@@ -18,16 +19,30 @@ const TrackBoxList = ({
   const dispatch = useDispatch();
   const { isPlaying } = useSelector((state) => state.playlist);
 
+  const playAudio = () => {
+    console.log('playaudio');
+    const player = isPlaying.audio.play();
+    if (player) {
+      player
+        .then(() => {
+          isPlaying.audio.addEventListener('ended', () => dispatch(resetTrack()));
+        })
+        .catch((error) => {
+          dispatch(resetTrack());
+        })
+    }
+  }
+
   useEffect(() => () => {
     dispatch(stopTrack());
   }, [])
 
   useEffect(() => {
+    console.log('playing useEff');
     if (isPlaying.status === '') return;
 
     if (isPlaying.status === 'play') {
-      isPlaying.audio.play();
-      isPlaying.audio.addEventListener('ended', () => dispatch(resetTrack()));
+      playAudio();
     }
     if (isPlaying.status === 'stop') {
       dispatch(resetTrack());
@@ -37,17 +52,17 @@ const TrackBoxList = ({
   const onPlayTrack = async (track) => {
     // a l'initialisation
     if (!isPlaying.id) {
-      dispatch(playTrack(track));
+      return dispatch(playTrack(track));
     }
 
     // au changement de musique
     if (isPlaying.status === 'play' && isPlaying.id !== track.id) {
-      dispatch(changeTrack(track));
+      return dispatch(changeTrack(track));
     }
 
     // stop
     if (isPlaying.status === 'play' && isPlaying.id === track.id) {
-      dispatch(stopTrack());
+      return dispatch(stopTrack());
     }
   };
 

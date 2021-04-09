@@ -1,6 +1,6 @@
 import { PLAY_TRACK, STOP_TRACK, RESET_TRACK } from './type';
 
-const stopCurrentTrack = (isPlaying) => {
+const stopCurrentTrack = async (isPlaying) => {
   isPlaying.audio.pause();
   isPlaying.audio.currentTime = 0;
 }
@@ -16,18 +16,18 @@ export const playTrack = (track) => (dispatch) => {
   });
 }
 
-export const changeTrack = (track) => (dispatch, getState) => {
+export const changeTrack = (track) => async (dispatch, getState) => {
   const { isPlaying } = getState().playlist;
-  stopCurrentTrack(isPlaying);
-  dispatch(playTrack(track));
+  await stopCurrentTrack(isPlaying);
+  await dispatch(playTrack(track));
 }
 
 
-export const stopTrack = () => (dispatch, getState) => {
+export const stopTrack = () => async (dispatch, getState) => {
   const { isPlaying } = getState().playlist;
   if (isPlaying.status === '') return;
-  stopCurrentTrack(isPlaying);
-  dispatch({
+  await stopCurrentTrack(isPlaying);
+  await dispatch({
     type: STOP_TRACK,
     payload: {
       status: 'stop',

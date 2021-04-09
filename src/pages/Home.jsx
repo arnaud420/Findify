@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import Layout from '../components/Layout';
 import config from '../config';
 import MockupPhone from '../assets/images/mockup_phone.png';
@@ -6,7 +7,7 @@ import IconSpotify from '../assets/images/icon_spotify.png';
 import IconHeart from '../assets/images/icon_heart.png';
 import IconMusic from '../assets/images/icon_music.png';
 import IconCard from '../components/IconCard';
-import { useSelector } from 'react-redux';
+import ArrowRight from '../assets/images/arrow_right.png';
 import ROUTES from '../config/routes';
 
 const { API_URL } = config;
@@ -28,20 +29,6 @@ const Home = () => {
                 quelle musique mettre en soirée ?
                 Pas de panique, Findify est la pour toi !
               </p>
-
-              {
-                isAuthenticated
-                  ? <Link
-                    to={ROUTES.CREATE_PLAYLIST}
-                    className="mt-5 button is-link is-outlined is-rounded"
-                  >
-                    C'est parti !
-                  </Link>
-                  : <a href={`${API_URL}/auth/login`} className="mt-5 button is-link is-outlined is-rounded">
-                    C'est parti !
-                  </a>
-              }
-
             </div>
             <div className="column">
               <img src={MockupPhone} alt="mockup telephone findify" />
@@ -65,16 +52,37 @@ const Home = () => {
                     Connexion à Spotify
                   </IconCard>
                 </div>
+                <div className="column is-1 p-0">
+                  <img className="mt-5" src={ArrowRight} alt='arrow right' />
+                </div>
                 <div className="column">
                   <IconCard icon={IconMusic}>
                     3 musiques coup de coeur
                   </IconCard>
+                </div>
+                <div className="column is-1 p-0">
+                  <img className="mt-5" src={ArrowRight} alt='arrow right' />
                 </div>
                 <div className="column">
                   <IconCard icon={IconHeart}>
                     La playlist parfaite
                   </IconCard>
                 </div>
+              </div>
+
+              <div className="has-text-right pr-5">
+                {
+                  isAuthenticated
+                    ? <Link
+                      to={ROUTES.CREATE_PLAYLIST}
+                      className="button is-link is-outlined is-rounded"
+                    >
+                      C'est parti !
+                  </Link>
+                    : <a href={`${API_URL}/auth/login`} className="button is-link is-outlined is-rounded">
+                      C'est parti !
+                  </a>
+                }
               </div>
             </div>
           </div>

@@ -46,12 +46,11 @@ const PlaylistCardList = ({ playlists, onPlaylistDelete }) => {
       if (playlists.length < settings.slidesToShow) {
         setSettings({
           ...settings,
-          slidesToShow: playlists.length,
-          slidesToScroll: playlists.length
+          infinite: false,
         })
       }
     }
-  }, [playlists, settings])
+  }, [playlists])
 
   if (!playlists || playlists.length <= 0) {
     return null;

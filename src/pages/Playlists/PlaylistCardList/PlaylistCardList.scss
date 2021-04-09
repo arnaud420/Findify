@@ -1,4 +1,7 @@
 .slick-slider {
+  .slick-track {
+    margin-left: 0;
+  }
   .slick-next:before, .slick-prev:before {
     content: none;
   }

@@ -3,6 +3,8 @@ import Layout from '../../components/Layout';
 import Loader from '../../components/Loader';
 import PlaylistCardList from './PlaylistCardList';
 import { getPlaylists } from '../../helpers/api';
+import { Link } from 'react-router-dom';
+import ROUTES from '../../config/routes';
 
 const Playlists = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -34,35 +36,47 @@ const Playlists = () => {
     )
   }
 
+  if (((playlists === null || playlists.length <= 0) && (editablePlaylists === null || editablePlaylists.length <= 0))) {
+    return (
+      <Layout>
+        <div className="has-text-centered">
+          <div className="has-text-white">
+            Créer d'abord une playlist pour la voir apparaître !
+        </div>
+          <Link to={ROUTES.CREATE_PLAYLIST}>C'est parti !</Link>
+        </div>
+      </Layout>
+    )
+  }
+
   return (
     <Layout container={false} section={false}>
-      <section className="section has-background-blue">
-        <div className="container">
-          {
-            playlists !== null
-              ? <section>
-                <h2 className="title is-size-4 has-text-white">Mes playlists terminées</h2>
-                <PlaylistCardList playlists={playlists} onPlaylistDelete={() => null} />
-              </section>
-              : null
-          }
-        </div>
-      </section>
 
-      <section className="section">
-        <div className="container">
-          {
-            editablePlaylists !== null
-              ? <section>
-                <h2 className="title is-size-4 has-text-white">Mes playlists en cours</h2>
-                <PlaylistCardList playlists={editablePlaylists} onPlaylistDelete={() => null} test />
-              </section>
-              : null
-          }
-        </div>
-      </section>
+      {
+        playlists !== null && playlists.length >= 1
+        && <section className="section has-background-blue">
+          <div className="container">
+            <section>
+              <h2 className="title is-size-4 has-text-white">Mes playlists terminées</h2>
+              <PlaylistCardList playlists={playlists} onPlaylistDelete={() => null} />
+            </section>
+          </div>
+        </section>
+      }
 
-    </Layout>
+      {
+        editablePlaylists !== null && editablePlaylists.length >= 1
+        && <section className="section">
+          <div className="container">
+            <section>
+              <h2 className="title is-size-4 has-text-white">Mes playlists en cours</h2>
+              <PlaylistCardList playlists={editablePlaylists} onPlaylistDelete={() => null} test />
+            </section>
+          </div>
+        </section>
+      }
+
+    </Layout >
   );
 }
 

@@ -64,8 +64,8 @@ const TrackBox = ({ track, onPlay, onDelete, onAdd, isPlaying, isArtistClickable
                   >
                     {
                       isPlaying && isPlaying.id === track.id
-                        ? <FaStop />
-                        : <FaPlay />
+                        ? <span className="has-text-danger"><FaStop /></span>
+                        : <span><FaPlay /></span>
                     }
                   </span>
                   {
