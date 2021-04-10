@@ -9,7 +9,7 @@ const RenderComponent = ({ children, isLink, item }) => {
     return <div className="column is-4">{children}</div>;
   }
 
-  return <Link className="column is-link-container" to={ROUTES.GET_PLAYLIST.replace(':id', item._id)}>
+  return <Link className="column is-link-container pb-0" to={ROUTES.GET_PLAYLIST.replace(':id', item._id)}>
     {children}
   </Link>
 }
@@ -35,7 +35,7 @@ const ItemCard = ({ item, onDelete, isInversed, isLink }) => {
             </figure>
           </div>
           <div className="card-content pl-0 pr-0 pb-0">
-            <div className="content mb-3">
+            <div className={`content ${isLink ? 'mb-4' : ''}`}>
               <p className={`title is-5 ${isInversed ? 'has-text-white' : 'has-text-primary'}`}>
                 {truncateString(item.title, 55)}
               </p>

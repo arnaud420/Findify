@@ -52,7 +52,7 @@ const Home = () => {
                     Connexion à Spotify
                   </IconCard>
                 </div>
-                <div className="column is-1 p-0">
+                <div className="column is-1 p-0 is-hidden-touch">
                   <img className="mt-5" src={ArrowRight} alt='arrow right' />
                 </div>
                 <div className="column">
@@ -60,7 +60,7 @@ const Home = () => {
                     3 musiques coup de coeur
                   </IconCard>
                 </div>
-                <div className="column is-1 p-0">
+                <div className="column is-1 p-0 is-hidden-touch">
                   <img className="mt-5" src={ArrowRight} alt='arrow right' />
                 </div>
                 <div className="column">
@@ -70,7 +70,7 @@ const Home = () => {
                 </div>
               </div>
 
-              <div className="has-text-right pr-5">
+              <div className="has-text-right has-text-centered-mobile pr-5 ">
                 {
                   isAuthenticated
                     ? <Link

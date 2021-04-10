@@ -14,10 +14,10 @@
 // @import './components/card.scss';
 
 html {
-  overflow: auto;
   
   body {
     // import custom class
+    overflow-x: hidden;
     @import './classes.scss';
   }
   .footer {

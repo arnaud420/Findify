@@ -1,11 +1,11 @@
-import { useSelector } from 'react-redux';
-import axios from 'axios';
-import Cookies from 'js-cookie';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 import config from '../../config';
 import Logo from '../../assets/images/logo.png';
 import ROUTES from '../../config/routes';
 import './Navbar.scss';
+import { unauthUser } from '../../actions/auth';
+import { useState } from 'react';
 
 const { API_URL } = config;
 
@@ -26,53 +26,39 @@ const routes = [
 ];
 
 const Navbar = () => {
+  const dispatch = useDispatch();
   const location = useLocation();
   const { pathname } = location;
-  const { user, isAuthenticated } = useSelector((state) => state.auth);
+  const { isAuthenticated } = useSelector((state) => state.auth);
+  const { user } = useSelector((state) => state.user);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  // const logout = async () => {
-  //   const { data } = await axios.get(`${config.API_URL}/logout`);
-  //   if (data.success) {
-  //     Cookies.remove('refresh_token');
-  //     Cookies.remove('access_token');
-  //     delete axios.defaults.headers.Authorization;
-  //     window.location.pathname = '/';
-  //   }
-  // };
+  const renderUserProfil = () => (
+    <div className="navbar-item has-dropdown is-hoverable ml-4">
+      <a className="navbar-link">
+        {
+          user.images && user.images.length >= 1
+            ? (
+              <figure className="image is-32x32">
+                <img className="is-rounded" src={user.images[0].url} alt={user.name} />
+              </figure>
+            )
+            : <figure className="image is-32x32">
+              <img className="is-rounded" src="https://bulma.io/images/placeholders/32x32.png" alt="fake profil image" />
+            </figure>
+        }
+      </a>
 
-  // const renderUserProfil = () => (
-  //   <div className="is-flex">
-  //     {
-  //       user.avatar
-  //         ? (
-  //           <figure className="image is-48x48">
-  //             <img className="is-rounded" src={user.avatar} alt={user.name} />
-  //           </figure>
-  //         )
-  //         : null
-  //     }
-  //     <div className="navbar-item has-dropdown is-hoverable">
-  //       <a className="navbar-link">
-  //         {user.name}
-  //       </a>
-
-  //       <div className="navbar-dropdown">
-  //         <Link to="/settings">
-  //           <a className="navbar-item">
-  //             Préférences
-  //           </a>
-  //         </Link>
-  //         <a
-  //           className="navbar-item"
-  //           onClick={logout}
-  //         >
-  //           Déconnexion
-  //         </a>
-  //       </div>
-  //     </div>
-
-  //   </div>
-  // );
+      <div className="navbar-dropdown">
+        {/* <Link to={ROUTES.PROFIL} className="navbar-item">
+          Profil
+        </Link> */}
+        <a className="navbar-item" onClick={(e) => { e.preventDefault(); dispatch(unauthUser()) }}>
+          Déconnexion
+        </a>
+      </div>
+    </div>
+  );
 
   const renderNavItems = (routes) => (
     routes.map((route) => {
@@ -100,7 +86,7 @@ const Navbar = () => {
   );
 
   return (
-    <nav className="navbar py-2 is-fixed-top" role="navigation" aria-label="main navigation">
+    <nav className="navbar is-fixed-top" role="navigation" aria-label="main navigation">
       <div className="container">
         <div className="navbar-brand">
           <Link
@@ -109,9 +95,21 @@ const Navbar = () => {
           >
             <img src={Logo} alt="logo" />
           </Link>
+
+          <a
+            role="button"
+            className={`navbar-burger ${isMenuOpen ? 'is-active' : ''}`}
+            aria-label="menu"
+            aria-expanded="false"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+          >
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+          </a>
         </div>
 
-        <div className="navbar-menu">
+        <div className={`navbar-menu ${isMenuOpen ? 'is-active' : ''}`}>
           <div className="navbar-end">
             {
               !isAuthenticated
@@ -123,6 +121,11 @@ const Navbar = () => {
                   </div>
                 )
                 : renderNavItems(routes)
+            }
+
+            {
+              isAuthenticated && user
+              && renderUserProfil()
             }
           </div>
         </div>

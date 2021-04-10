@@ -6,7 +6,7 @@ const TrackCardList = ({ tracks, onTrackDelete, isInversed }) => {
   }
 
   return (
-    <div className="columns">
+    <div className="columns is-mobile">
       {
         tracks.map((track) => <ItemCard
           key={`trackcard_${track.id}`}

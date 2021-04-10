@@ -43,6 +43,7 @@ const ArtsitModal = ({ onAddTrack, isAddable }) => {
       setArtistFullBio(null);
       setMaxLength(null);
       setDisplayBtn(false);
+      setLabelBtn('Voir plus');
     }
   }, [artist])
 

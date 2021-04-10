@@ -3,6 +3,7 @@ const ROUTES = {
   CREATE_PLAYLIST: '/playlists/create',
   GET_PLAYLISTS: '/playlists',
   GET_PLAYLIST: '/playlists/:id',
+  PROFIL: '/profil',
 };
 
 const playlistBreadCrumb = (currentPlaylistName) => [

@@ -9,6 +9,9 @@ import { authUser } from './actions/auth';
 import './assets/styles/app.scss';
 
 const token = Cookies.get('access_token');
+
+console.log('token', token);
+
 if (token) {
   store.dispatch(authUser(token));
 }
