@@ -33,6 +33,11 @@ const Navbar = () => {
   const { user } = useSelector((state) => state.user);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  const logout = (e) => {
+    e.preventDefault();
+    dispatch(unauthUser());
+  }
+
   const renderUserProfil = () => (
     <div className="navbar-item has-dropdown is-hoverable ml-4">
       <a className="navbar-link">
@@ -53,7 +58,10 @@ const Navbar = () => {
         {/* <Link to={ROUTES.PROFIL} className="navbar-item">
           Profil
         </Link> */}
-        <a className="navbar-item" onClick={(e) => { e.preventDefault(); dispatch(unauthUser()) }}>
+        <a
+          className="navbar-item"
+          onClick={logout}
+        >
           Déconnexion
         </a>
       </div>
