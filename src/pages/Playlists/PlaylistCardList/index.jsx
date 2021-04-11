@@ -29,17 +29,44 @@ const SamplePrevArrow = (props) => {
   );
 }
 
+const initialState = {
+  dots: true,
+  infinite: true,
+  speed: 500,
+  slidesToShow: 4,
+  slidesToScroll: 4,
+  touchMove: false,
+  nextArrow: <SampleNextArrow />,
+  prevArrow: <SamplePrevArrow />,
+};
+
 const PlaylistCardList = ({ playlists, onPlaylistDelete }) => {
-  const [settings, setSettings] = useState({
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 4,
-    slidesToScroll: 4,
-    touchMove: false,
-    nextArrow: <SampleNextArrow />,
-    prevArrow: <SamplePrevArrow />,
-  });
+  const [settings, setSettings] = useState(initialState);
+
+  const onResize = () => {
+    if (window.innerWidth <= 767) {
+      setSettings({
+        ...settings,
+        slidesToScroll: 1,
+        slidesToShow: 1,
+      })
+    } else {
+      setSettings({
+        ...initialState,
+        infinite: false,
+      });
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('resize', onResize);
+
+    return () => {
+      window.removeEventListener('resize', onResize);
+    }
+  }, [])
+
+
 
   useEffect(() => {
     if (playlists && playlists.length >= 1) {
@@ -49,12 +76,15 @@ const PlaylistCardList = ({ playlists, onPlaylistDelete }) => {
           infinite: false,
         })
       }
+      onResize();
     }
   }, [playlists])
 
   if (!playlists || playlists.length <= 0) {
     return null;
   }
+
+  console.log(settings);
 
   return (
     <Slider {...settings}>

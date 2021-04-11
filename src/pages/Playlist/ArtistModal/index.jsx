@@ -28,7 +28,7 @@ const ArtsitModal = ({ onAddTrack, isAddable }) => {
     if (artist) {
       const artistBio = getArtistBio(artist);
       if (!artistBio) {
-        return setBio('Pas de bio disponible');
+        return setBio(null);
       }
       const firstParagraphLength = getFirstParagraphLength(artist);
       setArtistFullBio(artistBio);

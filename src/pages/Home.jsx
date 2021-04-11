@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import Layout from '../components/Layout';
 import config from '../config';
 import MockupPhone from '../assets/images/mockup_phone.png';
+import FloatingScreen from '../assets/images/floating_screen.png';
 import IconSpotify from '../assets/images/icon_spotify.png';
 import IconHeart from '../assets/images/icon_heart.png';
 import IconMusic from '../assets/images/icon_music.png';
@@ -30,7 +31,7 @@ const Home = () => {
                 Pas de panique, Findify est la pour toi !
               </p>
             </div>
-            <div className="column">
+            <div className="column has-text-centered">
               <img src={MockupPhone} alt="mockup telephone findify" />
             </div>
           </div>
@@ -39,12 +40,12 @@ const Home = () => {
 
       <section className="section has-background-blue-dark">
         <div className="container">
-          <div className="columns">
+          <div className="columns is-vcentered">
             <div className="column">
-              <img src={MockupPhone} alt="mockup telephone findify" />
+              <img src={FloatingScreen} alt="mockup telephone findify" />
             </div>
             <div className="column is-8">
-              <h2 className="title is-2 has-text-link mb-6">Findify c'est quoi ?</h2>
+              <h2 className="title is-2 has-text-link mb-6 has-text-centered">Findify c'est quoi ?</h2>
 
               <div className="columns">
                 <div className="column">

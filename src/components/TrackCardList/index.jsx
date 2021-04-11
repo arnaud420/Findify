@@ -15,7 +15,7 @@ const TrackCardList = ({ tracks, onTrackDelete, isInversed }) => {
             ...track,
             image: track.album.images[1].url,
             title: track.name,
-            subtitle: track.album.name,
+            subtitle: track.artists[0].name,
           }}
           isInversed={isInversed}
         />)

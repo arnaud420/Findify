@@ -5,12 +5,13 @@ const Footer = () => {
   return (
     <footer className="footer is-footer">
       <div className="container">
-        <div className="columns">
-          <div className="column is-flex align-center">
+        <div className="columns is-vcentered is-mobile">
+          <div className="column">
             <img src={Logo} alt="logo" />
           </div>
-          <div className="column is-flex align-center justify-end has-text-white">
-            © 2021 Findify
+          <div className="column has-text-right has-text-white">
+            {/* © 2021 Findify */}
+            2021 Findify
           </div>
         </div>
       </div>
