@@ -1,5 +1,5 @@
 const config = {
-  API_URL: 'http://localhost:3003',
+  API_URL: 'https://findify-api.herokuapp.com',
 };
 
 export default config;
