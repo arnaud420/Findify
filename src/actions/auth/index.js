@@ -6,6 +6,7 @@ import { getUser } from '../user';
 
 export const authUser = (token) => async (dispatch) => {
   try {
+    console.log('AUTH user');
     dispatch({ type: AUTH_USER });
     setAuthorizationToken(token);
     await dispatch(getUser(token));
