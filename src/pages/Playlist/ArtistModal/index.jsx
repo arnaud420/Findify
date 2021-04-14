@@ -67,10 +67,10 @@ const ArtsitModal = ({ onAddTrack, isAddable }) => {
             {
               artist && (
                 <div>
-                  <section className="hero" style={{ backgroundImage: `url('${artist.images[0].url}')` }}>
-                    <div className="hero-body">
+                  <section className="hero">
+                    <div className="hero-body pb-5 pt-5">
                       <div className="container">
-                        <p className="title">
+                        <p className="title is-3 has-text-primary">
                           {artist.name}
                         </p>
                       </div>
@@ -78,11 +78,11 @@ const ArtsitModal = ({ onAddTrack, isAddable }) => {
                   </section>
                   {
                     bio && (
-                      <div className="section">
+                      <div className="section bio">
                         <div className="container">
                           <p dangerouslySetInnerHTML={{ __html: bio }} />
                           {
-                            displayBtn && <button className="mt-4 button is-text" onClick={toggleBio}>{labelBtn}</button>
+                            displayBtn && <button className="button is-link is-outlined is-rounded mt-4" onClick={toggleBio}>{labelBtn}</button>
                           }
                         </div>
                       </div>
@@ -90,7 +90,8 @@ const ArtsitModal = ({ onAddTrack, isAddable }) => {
                   }
 
                   <div className="top-tracks-section">
-                    <div className="section">
+                    <div className="section" style={{ backgroundImage: `url('${artist.images[0].url}')` }}>
+                      <div className="layer" />
                       <div className="container">
                         <h2 className="title is-5 has-text-white">Top titres</h2>
 

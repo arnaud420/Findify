@@ -1,5 +1,5 @@
-import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { Link, useHistory, useLocation, useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import Layout from '../components/Layout';
 import config from '../config';
 import MockupPhone from '../assets/images/mockup_phone.png';
@@ -10,11 +10,30 @@ import IconMusic from '../assets/images/icon_music.png';
 import IconCard from '../components/IconCard';
 import ArrowRight from '../assets/images/arrow_right.png';
 import ROUTES from '../config/routes';
+import { useEffect } from 'react';
+import queryString from 'query-string';
+import { authUser } from '../actions/auth';
+import Cookies from 'js-cookie';
 
 const { API_URL } = config;
 
 const Home = () => {
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const location = useLocation();
   const { isAuthenticated } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    const { access_token, refresh_token } = queryString.parse(location.search);
+    if (!access_token || !refresh_token) return;
+
+    console.log('set cookies');
+
+    dispatch(authUser(access_token));
+    Cookies.set('access_token', access_token, { expires: 7 });
+    Cookies.set('refresh_token', refresh_token, { expires: 7 });
+    history.push(ROUTES.CREATE_PLAYLIST);
+  }, [location])
 
   return (
     <Layout section={false} container={false}>
