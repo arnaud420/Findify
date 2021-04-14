@@ -92,7 +92,7 @@ const PlaylistCardList = ({ playlists, onPlaylistDelete }) => {
         playlists.map((playlist) =>
           <ItemCard
             key={`playlistcard_${playlist._id}`}
-            onDelete={onPlaylistDelete}
+            onDelete={(playlist) => onPlaylistDelete(playlist)}
             item={{
               ...playlist,
               image: playlist.images.length >= 1 ? playlist.images[1].url : playlist.generatedTracks[0].album.images[1].url,

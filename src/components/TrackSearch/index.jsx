@@ -41,8 +41,8 @@ const TrackSearch = ({ onTrackClicked, placeholder, size, className }) => {
                       className="pl-3 pr-3 pt-3 pb-3 is-clickable _is-hoverable"
                       onClick={() => onTrackClick(track)}
                     >
-                      <div className="columns">
-                        <div className="column is-1">
+                      <div className="columns is-mobile">
+                        <div className="column is-1-tablet is-2-mobile">
                           {
                             track.album.images && track.album.images.length >= 2
                               ? (

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import Layout from '../../components/Layout';
 import Loader from '../../components/Loader';
 import PlaylistCardList from './PlaylistCardList';
-import { getPlaylists } from '../../helpers/api';
+import { deletePlaylist, getPlaylists } from '../../helpers/api';
 import { Link } from 'react-router-dom';
 import ROUTES from '../../config/routes';
 
@@ -28,12 +28,25 @@ const Playlists = () => {
     })()
   }, []);
 
+  const onDelete = async ({ _id }) => {
+    try {
+      await deletePlaylist(_id);
+      const newEditablePlaylists = editablePlaylists.filter((p) => p._id !== _id);
+      const newPlaylists = playlists.filter((p) => p._id !== _id);
+      setPlaylists(newPlaylists);
+      setEditablePlaylists(newEditablePlaylists);
+    } catch (error) {
+      console.error('error', error);
+      throw error;
+    }
+  }
+
   const renderPlaylistList = (title, playlists, hasBlueBg = false) => (
     <section className={`section ${hasBlueBg ? 'has-background-blue' : ''}`}>
       <div className="container">
         <section>
           <h2 className="title is-size-4 has-text-white">{title}</h2>
-          <PlaylistCardList playlists={playlists} onPlaylistDelete={() => null} />
+          <PlaylistCardList playlists={playlists} onPlaylistDelete={onDelete} />
         </section>
       </div>
     </section>

@@ -58,31 +58,42 @@ const Playlist = () => {
   }, [playlist])
 
   const removeTrack = (track) => {
+    const newTracks = [...playlist.tracks.filter((t) => t.id !== track.id)];
     setPlaylist({
       ...playlist,
-      tracks: [...playlist.tracks.filter((t) => t.id !== track.id)]
+      tracks: newTracks
     });
+    editCurrentPlaylist({tracks: newTracks });
   }
 
   const addTrack = (track) => {
+    let newTracks = null;
     const trackAlreadyInList = playlist.tracks.find((t) => track.id === t.id);
-
+    
     if (trackAlreadyInList) {
+      newTracks = [
+        track,
+        ...playlist.tracks.filter((t) => track.id !== t.id),
+      ];
+      
       setPlaylist({
         ...playlist,
-        tracks: [
-          track,
-          ...playlist.tracks.filter((t) => track.id !== t.id),
-        ]
+        tracks: newTracks
       });
     } else {
+      newTracks = [
+        track,
+        ...playlist.tracks,
+      ];
+
       setPlaylist({
         ...playlist,
-        tracks: [
-          track,
-          ...playlist.tracks,
-        ]
+        tracks: newTracks
       });
+    }
+
+    if (newTracks) {
+      editCurrentPlaylist({tracks: newTracks});
     }
   }
 
@@ -91,20 +102,22 @@ const Playlist = () => {
       return await editPlaylist(id, body);
     } catch (error) {
       console.error('error', error);
-      throw error;
+      // throw error;
     }
   }
 
-  const dragTrack = (track) => {
+  const dragTrack = async (track) => {
     const sourceIdx = parseInt(track.source.index);
     const destIdx = parseInt(track.destination.index);
     const newList = [...playlist.tracks];
     newList.splice(sourceIdx, 1);
     newList.splice(destIdx, 0, playlist.tracks[sourceIdx]);
-    setPlaylist({
+    const newPlaylist = {
       ...playlist,
       tracks: newList,
-    });
+    };
+    setPlaylist(newPlaylist);
+    editCurrentPlaylist({tracks: newPlaylist.tracks });
   };
 
   const savePlaylist = async () => {

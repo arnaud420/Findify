@@ -39,8 +39,8 @@ const TrackBox = ({ track, onPlay, onDelete, onAdd, isPlaying, isArtistClickable
         </div>
         <div className="media-content">
           <div className="content">
-            <div className="columns">
-              <div className="column is-9">
+            <div className="columns is-mobile is-vcentered">
+              <div className="column is-9-tablet is-8-mobile">
                 <p className="mb-0">
                   {
                     isArtistClickable

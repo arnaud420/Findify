@@ -1,19 +1,20 @@
 import { Link, useHistory, useLocation, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import Layout from '../components/Layout';
-import config from '../config';
-import MockupPhone from '../assets/images/mockup_phone.png';
-import FloatingScreen from '../assets/images/floating_screen.png';
-import IconSpotify from '../assets/images/icon_spotify.png';
-import IconHeart from '../assets/images/icon_heart.png';
-import IconMusic from '../assets/images/icon_music.png';
-import IconCard from '../components/IconCard';
-import ArrowRight from '../assets/images/arrow_right.png';
-import ROUTES from '../config/routes';
+import Cookies from 'js-cookie';
 import { useEffect } from 'react';
 import queryString from 'query-string';
-import { authUser } from '../actions/auth';
-import Cookies from 'js-cookie';
+import Layout from '../../components/Layout';
+import config from '../../config';
+import MockupPhone from '../../assets/images/mockup_phone.png';
+import FloatingScreen from '../../assets/images/floating_screen.png';
+import IconSpotify from '../../assets/images/icon_spotify.png';
+import IconHeart from '../../assets/images/icon_heart.png';
+import IconMusic from '../../assets/images/icon_music.png';
+import IconCard from '../../components/IconCard';
+import ArrowRight from '../../assets/images/arrow_right.png';
+import ROUTES from '../../config/routes';
+import { authUser } from '../../actions/auth';
+import './Home.scss';
 
 const { API_URL } = config;
 
@@ -60,7 +61,7 @@ const Home = () => {
       <section className="section has-background-blue-dark">
         <div className="container">
           <div className="columns is-vcentered">
-            <div className="column">
+            <div className="column is-hidden-mobile">
               <img src={FloatingScreen} alt="mockup telephone findify" />
             </div>
             <div className="column is-8">
@@ -90,7 +91,7 @@ const Home = () => {
                 </div>
               </div>
 
-              <div className="has-text-right has-text-centered-mobile pr-5 ">
+              <div className="has-text-right has-text-centered-mobile pr-5">
                 {
                   isAuthenticated
                     ? <Link

@@ -42,6 +42,17 @@ export const editPlaylist = async (id, body) => {
   }
 };
 
+export const deletePlaylist = async (id) => {
+  try {
+    const { data } = await axios.delete(`${config.API_URL}/playlists/${id}`);
+    console.log('data', data);
+    return data.data;
+  } catch (error) {
+    console.log('error', error);
+    throw new Error(error);
+  }
+};
+
 export const savePlaylistToSpotify = async (id) => {
   try {
     const data = await axios.post(`${config.API_URL}/playlists/${id}/spotify`);

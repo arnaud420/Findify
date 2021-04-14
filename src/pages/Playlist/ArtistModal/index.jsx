@@ -70,9 +70,16 @@ const ArtsitModal = ({ onAddTrack, isAddable }) => {
                   <section className="hero">
                     <div className="hero-body pb-5 pt-5">
                       <div className="container">
-                        <p className="title is-3 has-text-primary">
-                          {artist.name}
-                        </p>
+                        <div className="columns is-vcentered">
+                          <div className="column is-8">
+                            <p className="title is-3 has-text-primary">
+                              {artist.name}
+                            </p>
+                          </div>
+                          <div className="column has-text-right">
+                            <a target="_blank" href={artist.external_urls.spotify} className="button is-primary is-rounded">Découvrir sur spotify</a>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </section>

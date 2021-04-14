@@ -120,3 +120,21 @@
       100% {height:5px;transform:translateY(0px);background:#9b59b6;}
   }
 }
+
+@media screen and (max-width: 768px) {
+  .track-box.box {
+    .media {
+      .media-content {
+        overflow: hidden!important;
+
+        .is-pulled-right {
+          float: none!important;
+
+          span.icon.is-size-4.mr-6.is-clickable.has-text-primary {
+            margin-right: .9rem!important;
+          }
+        }
+      }
+    }
+  }
+}
