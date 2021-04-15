@@ -6,14 +6,12 @@ import { getUser } from '../user';
 
 export const authUser = (token) => async (dispatch) => {
   try {
-    console.log('AUTH user');
     dispatch({ type: AUTH_USER });
     setAuthorizationToken(token);
     await dispatch(getUser(token));
   } catch (error) {
     console.error('authUser error', error)
     Cookies.remove('access_token');
-    Cookies.remove('refresh_token');
     setAuthorizationToken();
     dispatch({ type: UNAUTH_USER });
     dispatch(sendErrorNotif(error.response.data.data || error.message));
@@ -23,7 +21,6 @@ export const authUser = (token) => async (dispatch) => {
 export const unauthUser = () => (dispatch) => {
   try {
     Cookies.remove('access_token');
-    Cookies.remove('refresh_token');
     setAuthorizationToken();
     dispatch({ type: UNAUTH_USER });
   } catch (error) {

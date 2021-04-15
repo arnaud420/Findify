@@ -25,14 +25,11 @@ const Home = () => {
   const { isAuthenticated } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    const { access_token, refresh_token } = queryString.parse(location.search);
-    if (!access_token || !refresh_token) return;
-
-    console.log('set cookies');
+    const { access_token } = queryString.parse(location.search);
+    if (!access_token) return;
 
     dispatch(authUser(access_token));
     Cookies.set('access_token', access_token, { expires: 7 });
-    Cookies.set('refresh_token', refresh_token, { expires: 7 });
     history.push(ROUTES.CREATE_PLAYLIST);
   }, [location])
 

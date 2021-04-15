@@ -34,7 +34,6 @@ export const getArtistInfo = async (id) => {
 export const editPlaylist = async (id, body) => {
   try {
     const { data } = await axios.patch(`${config.API_URL}/playlists/${id}`, body);
-    console.log('data', data);
     return data.data;
   } catch (error) {
     console.log('error', error);
@@ -45,7 +44,6 @@ export const editPlaylist = async (id, body) => {
 export const deletePlaylist = async (id) => {
   try {
     const { data } = await axios.delete(`${config.API_URL}/playlists/${id}`);
-    console.log('data', data);
     return data.data;
   } catch (error) {
     console.log('error', error);
@@ -56,7 +54,6 @@ export const deletePlaylist = async (id) => {
 export const savePlaylistToSpotify = async (id) => {
   try {
     const data = await axios.post(`${config.API_URL}/playlists/${id}/spotify`);
-    console.log('data', data);
     return data;
   } catch (error) {
     console.log('error', error);
